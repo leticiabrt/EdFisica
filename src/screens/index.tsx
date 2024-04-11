@@ -1,0 +1,6 @@
+export {Noticias as Slide1} from './Noticias' 
+export {Perfil as Slide2} from './Perfil' 
+export {Checkin as Slide3} from './Checkins' 
+export {Times as Slide4} from './Times' 
+export {Cronograma as Slide5} from './Cronograma' 
+export {Reservas as Slide6} from './Reservas' 

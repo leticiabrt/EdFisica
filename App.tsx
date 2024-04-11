@@ -1,17 +1,14 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { View } from 'react-native';
 import { ComponentHeader, ComponentFooter } from './src/components';
+import { Navigation } from './src/navigation'
 
 const App = () => {
   return (
-    <View>
-      <ComponentHeader />
-      {/* Outros componentes do seu aplicativo */}
-      
-     
-      <ComponentFooter />
     
-    </View>
+      <Navigation/>
+      
   );
 };
 

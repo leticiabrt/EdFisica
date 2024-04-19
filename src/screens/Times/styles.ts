@@ -2,29 +2,21 @@ import { StyleSheet } from "react-native";
 import { colors } from "../../styles/globalstyles"
 
 export const styles = StyleSheet.create({
-    fundo:{
+    container: {
         flex: 1,
-        backgroundColor: colors.white,
-    }, 
-    
-    image: {
-        width: 250,
-        height: 180,
-        borderRadius: 15,
     },
-    texto: {
-        fontSize: 25
-    },
-    ativado:{
-        backgroundColor: 'white'
-    },
-    desativado:{
-        backgroundColor: 'black'
-    },
-    centralizar: {
-        display: 'flex',
+    header: {
+        backgroundColor: colors.secondary,
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 1
-    }
+        width: 400,
+        height: 40,
+    },
+
+    texto: {
+        color: colors.white,
+        fontWeight: 'bold',
+        fontSize: 20,
+    },
+
 })

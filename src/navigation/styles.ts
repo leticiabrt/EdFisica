@@ -5,5 +5,6 @@ export const styles = StyleSheet.create({
     drawerStyle: {
         backgroundColor: colors.primary,
         width: 240,
-      },
+        
+    },
 })

@@ -2,29 +2,56 @@ import { StyleSheet } from "react-native";
 import { colors } from "../../styles/globalstyles"
 
 export const styles = StyleSheet.create({
-    fundo:{
+    container:{
         flex: 1,
         backgroundColor: colors.white,
     }, 
-    
-    image: {
-        width: 250,
-        height: 180,
-        borderRadius: 15,
-    },
-    texto: {
-        fontSize: 25
-    },
-    ativado:{
-        backgroundColor: 'white'
-    },
-    desativado:{
-        backgroundColor: 'black'
-    },
-    centralizar: {
-        display: 'flex',
+    header: {
+        backgroundColor: colors.secondary,
         alignItems: 'center',
         justifyContent: 'center',
-        flex: 1
-    }
+        width: 400,
+        height: 40,
+    },
+
+    texto: {
+        color: colors.white,
+        fontWeight: 'bold',
+        fontSize: 20,
+    },
+
+    table: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: colors.gray,
+        margin: 10,
+      },
+      row: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderColor: colors.black,
+      },
+      cell: {
+        flex: 1,
+        padding: 10,
+        textAlign: 'center',
+      },
+      text:{
+        flex: 1,
+        padding: 10,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 17,
+      },
+      botao:{
+        flex: 1,
+        padding: 10,
+      },
+
+      mergedCell: {
+        textAlign: 'center',
+        textAlignVertical: 'center',
+      },
 })

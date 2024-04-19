@@ -4,7 +4,8 @@ export const colors={
     black: '#000',
     white: '#fff',
     primary: '#FFDF2B',
-    secondary: '#00198E'
+    secondary: '#00198E',
+    gray: '#D9D9D9'
 }
 
 export const styleContainer = StyleSheet.create({

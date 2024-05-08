@@ -1,12 +1,16 @@
-import { TouchableOpacity, TouchableOpacityProps } from "react-native";
+import { TouchableOpacity, TouchableOpacityProps, Text } from "react-native";
 import { styles } from "./styles"
 
 interface IButton extends TouchableOpacityProps{
     onPressI: () => void
+    cor: boolean,
+    title: string
 }
 
-export function ButtonSlide({onPressI}: IButton){
+export function ButtonSlide({title, onPressI, cor}: IButton){
     return(
-        <TouchableOpacity style={styles.ball} onPress={onPressI} />
+        <TouchableOpacity style={cor ? styles.ballCor : styles.ball } onPress={onPressI} >
+            <Text style={cor ? styles.buttonText : styles.buttonTextI}>{title}</Text>
+        </TouchableOpacity>
     )
 }

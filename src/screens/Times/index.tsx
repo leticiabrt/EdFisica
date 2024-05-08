@@ -1,46 +1,28 @@
-import { styles } from "./styles"
+import { JEMG } from './Jemg';
+import { Intercampi } from './Intercampi';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 
-import { FaqItem } from "../../components/FaqItem/"
-import { View, Text } from 'react-native';
+export interface IPagina {
+    setPageI: Dispatch<SetStateAction<number>>
+}
 
+export function Times() {
+    const handlePress = () => {
+        // Lógica a ser executada ao pressionar o botão
+        console.log('Botão pressionado!');
+    };
 
-export const Times = () => {
-    const faqData = [
-        {
-          question: "Vôlei Feminino",
-          tableData: {
-            headers: ["Nome", "Turma"],
-            rows: [
-              ["Letícia Brito", "3 Info"],
-              ["Marcela Selvatti", "2 Edif"],
-            ],
-          },
-        },
-        {
-          question: "Vôlei Masculino",
-          tableData: {
-            headers: ["Nome", "Turma"],
-            rows: [
-              ["João Marcos Pereira", "3 Info"],
-              ["Gabriel de Barros", "3 Meca"],
-            ],
-          },
-        },
-        
-      ];
-    
-      return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.texto}>TIMES</Text>
-               
-            </View>
-          {faqData.map((faq, index) => (
-            <FaqItem key={index} question={faq.question} tableData={faq.tableData} />
-          ))}
-        </View>
-      );
-};
+    const [page, setPage] = useState(1)
 
+    if (page == 1) {
+        return (
+            <JEMG setPageI={setPage} />
+        );
+    } else if (page == 2) {
+        return (
+            <Intercampi setPageI={setPage} />
+        );
+    } 
 
+}

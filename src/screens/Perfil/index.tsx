@@ -1,88 +1,61 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Image } from 'react-native';
+import { styles } from './styles';
+import CustomButtonII from '../../components/CustomButtonII'
 
-interface ReservationData {
-  dia: string;
-  horarios: string[];
-}
 
 export const Perfil = () => {
-  const data: ReservationData[] = [
-    { dia: '2024-04-22', horarios: ['09:00', '09:30', '10:00'] },
-    { dia: '2024-04-23', horarios: ['09:00', '09:30', '10:00'] },
-  ];
-
-  // Função para criar os elementos da tabela
-  const renderTableRows = () => {
-    let rows = [];
-    for (let i = 0; i < data.length; i++) {
-      const rowData = data[i];
-      const dateCell = (
-        <Text key={`date_${i}`} style={[styles.tableCell, styles.dateCell]}>
-          {rowData.dia}
-        </Text>
-      );
-      const firstRow = (
-        <View key={`row_${i}`} style={styles.tableRow}>
-          {dateCell}
-          <Text style={styles.tableCell}>{rowData.horarios[0]}</Text>
-          <Text style={styles.tableCell}>Disponível</Text>
-        </View>
-      );
-      rows.push(firstRow);
-      for (let j = 1; j < rowData.horarios.length; j++) {
-        const row = (
-          <View key={`row_${i}_${j}`} style={styles.tableRow}>
-            <Text style={styles.tableCell}>{rowData.horarios[j]}</Text>
-            <Text style={styles.tableCell}>Disponível</Text>
-          </View>
-        );
-        rows.push(row);
-      }
-    }
-    return rows;
+  const handlePress = () => {
+    // Lógica a ser executada ao pressionar o botão
+    console.log('Botão pressionado!');
   };
 
+  const perfil = require('../../assets/perfil.png')
   return (
     <View style={styles.container}>
-      <View style={styles.table}>
-        <View style={[styles.tableRow, styles.tableHeader]}>
-          <Text style={styles.tableCell}>Dia</Text>
-          <Text style={styles.tableCell}>Horário</Text>
-          <Text style={styles.tableCell}>Reserva</Text>
+      <View style={styles.header}>
+        <Text style={styles.texto}>PERFIL</Text>
+      </View>
+      <View style={styles.tela}>
+        <View style={styles.info}>
+          <Image source={perfil}></Image>
+          <View style={styles.infos}>
+            <Text style={styles.title}>NOME: </Text>
+            <Text style={styles.title}>TURMA: </Text>
+            <Text style={styles.title}>CURSO: </Text>
+          </View>
+
         </View>
-        {renderTableRows()}
+        <View style={styles.desc}>
+          <View style={styles.caixa}>
+            <Text style={styles.title}>Descrição esportiva: </Text>
+            <Text style={styles.text}>************************
+              *****************************8
+              ************************8
+              *************************8
+              ***************************
+
+            </Text>
+          </View>
+        </View>
+        <View style={styles.botao}>
+          <View style={styles.but}>
+            <CustomButtonII title="Reservas" onPress={handlePress} />
+          </View>
+          <View style={styles.but}>
+            <CustomButtonII title="Times" onPress={handlePress} />
+          </View>
+          <View style={styles.but}>
+            <CustomButtonII title="Checkins" onPress={handlePress} />
+          </View>
+
+        </View>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
-  table: {
-    borderWidth: 1,
-    borderColor: '#000',
-  },
-  tableRow: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: '#000',
-  },
-  tableHeader: {
-    backgroundColor: '#f0f0f0',
-  },
-  tableCell: {
-    flex: 1,
-    padding: 10,
-  },
-  dateCell: {
-    padding: 10,
-    backgroundColor: '#f0f0f0',
-  },
-});
+
 
 
 

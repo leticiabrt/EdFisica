@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../../styles/globalstyles"
+import { colors } from "../../../styles/globalstyles"
 
 export const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: colors.white,
     }, 
+
     header: {
         backgroundColor: colors.secondary,
         alignItems: 'center',
@@ -18,6 +18,12 @@ export const styles = StyleSheet.create({
         color: colors.white,
         fontWeight: 'bold',
         fontSize: 20,
+    },
+
+    botoes: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'flex-start'
     },
 
     table: {
@@ -38,6 +44,12 @@ export const styles = StyleSheet.create({
         padding: 10,
         textAlign: 'center',
       },
+      cellI: {
+        flex: 1,
+        padding: 10,
+        textAlign: 'center',
+        backgroundColor: '#E91001',
+      },
       text:{
         flex: 1,
         padding: 10,
@@ -48,10 +60,5 @@ export const styles = StyleSheet.create({
       botao:{
         flex: 1,
         padding: 10,
-      },
-
-      mergedCell: {
-        textAlign: 'center',
-        textAlignVertical: 'center',
-      },
+      }
 })

@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../../styles/globalstyles"
+import { colors } from "../../../styles/globalstyles"
 
 export const styles = StyleSheet.create({
-    container: {
+    container:{
         flex: 1,
-    },
+    }, 
+
     header: {
         backgroundColor: colors.secondary,
         alignItems: 'center',
@@ -19,10 +20,10 @@ export const styles = StyleSheet.create({
         fontSize: 20,
     },
 
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10,
+    botoes: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'flex-start'
     },
 
     table: {
@@ -30,28 +31,34 @@ export const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: colors.gray,
         margin: 10,
-        flexDirection: 'column',
-    },
-    row: {
+      },
+      row: {
         flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        borderBottomWidth: 1,
         borderColor: colors.black,
-    },
-    cell: {
+      },
+      cell: {
         flex: 1,
         padding: 10,
-        borderWidth: 1,
-
         textAlign: 'center',
-        width: 120,
-    },
-    text:{
+      },
+      cellI: {
+        flex: 1,
+        padding: 10,
+        textAlign: 'center',
+        backgroundColor: '#E91001',
+      },
+      text:{
         flex: 1,
         padding: 10,
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 17,
-        borderWidth: 1,
-        width: 120,
       },
-
+      botao:{
+        flex: 1,
+        padding: 10,
+      }
 })

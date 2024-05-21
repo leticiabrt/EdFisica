@@ -24,8 +24,8 @@ export const Perfil = () => {
             <Text style={styles.title}>TURMA: </Text>
             <Text style={styles.title}>CURSO: </Text>
           </View>
-
         </View>
+
         <View style={styles.desc}>
           <View style={styles.caixa}>
             <Text style={styles.title}>Descrição esportiva: </Text>
@@ -34,10 +34,10 @@ export const Perfil = () => {
               ************************8
               *************************8
               ***************************
-
             </Text>
           </View>
         </View>
+        
         <View style={styles.botao}>
           <View style={styles.but}>
             <CustomButtonII title="Reservas" onPress={handlePress} />

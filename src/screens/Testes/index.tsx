@@ -1,27 +1,35 @@
 import React from 'react';
 import { ImageBackground, TouchableOpacity, Text, StyleSheet, View } from 'react-native';
+import {LinearGradient} from 'expo-linear-gradient';
 
 
 export const Testes = () => {
-  const fundoteste = require('../../assets/fundoteste.png')
   return (
+
+    <LinearGradient 
+    style={{
+    height: 50, 
+    width: 200, 
+    marginTop: 15, 
+    borderRadius: 5}}
+
+    start={{x:0,y:1}}
+	  end={{x:1,y:0}}
+    colors={['#00198E','#FFDF2B']}>
+
     <TouchableOpacity style={styles.button} activeOpacity={0.7}>
-      <ImageBackground source={fundoteste}>
+      
       <Text style={styles.text}>Meu Botão</Text>
-      </ImageBackground>
     </TouchableOpacity>
+
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    //width: 200,
-  //  height: 50,
     borderRadius: 50,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden', // Evita que a imagem de fundo se espalhe para fora do botão
    },
   text: {
     padding: 10,

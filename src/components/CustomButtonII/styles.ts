@@ -3,13 +3,13 @@ import {colors} from '../../styles/globalstyles';
 
 export const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#8F9061',
-        padding: 10,
-        borderRadius: 20,
+        padding: 12,
         alignItems: 'center',
+        justifyContent: 'center',
+
       },
       buttonText: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 18,
       },
 })

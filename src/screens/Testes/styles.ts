@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../styles/globalstyles"
+import LinearGradient from 'react-native-linear-gradient';
 
 export const styles = StyleSheet.create({
     container: {

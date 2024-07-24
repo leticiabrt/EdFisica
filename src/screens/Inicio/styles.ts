@@ -19,13 +19,7 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: 70,
     },
-    box: {
-        backgroundColor: colors.secondary,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        height: 50,
-    },
+    
     texto: {
         color: colors.white,
         fontWeight: 'bold',

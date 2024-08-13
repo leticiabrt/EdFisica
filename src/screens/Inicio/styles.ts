@@ -57,5 +57,9 @@ export const styles = StyleSheet.create({
         width: 200,
     },
 
+    footer: {
+        marginBottom: 5,
+    }
+
 
 })

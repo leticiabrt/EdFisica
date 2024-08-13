@@ -4,6 +4,7 @@ import { styles } from './styles';
 import CustomButtonII from '../../components/CustomButtonII'
 
 
+
 export const Perfil = () => {
   const handlePress = () => {
     // Lógica a ser executada ao pressionar o botão
@@ -11,10 +12,20 @@ export const Perfil = () => {
   };
 
   const perfil = require('../../assets/perfil.png')
+  const sms = require('../../assets/sms.png')
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.texto}>PERFIL</Text>
+        <View style={styles.teste}>
+        <View style={styles.tex}>
+          <Text style={styles.texto}>PERFIL</Text>
+        </View>
+        </View>
+        
+        <View style={styles.sms}>
+          <Image style={styles.img} source={sms}></Image>
+        </View>
+        
       </View>
       <View style={styles.tela}>
         <View style={styles.info}>

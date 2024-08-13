@@ -7,16 +7,18 @@ export const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: colors.secondary,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 400,
+        width: '100%',
         height: 40,
+        padding: 5,
+        flexDirection: 'row',
+        display: 'flex',
+        justifyContent: 'flex-end',
     },
 
     texto: {
         color: colors.white,
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 20, 
     },
 
     info: {
@@ -64,9 +66,23 @@ export const styles = StyleSheet.create({
         width: 200,
     },
 
-    tela: {
-        justifyContent: 'space-around',
-        flex: 1,
+    //tela: {
+    //    justifyContent: 'space-around',
+    //    flex: 1,
+    //},
+    sms: {
+        
+    },
+    img: {
+        height: 30,
+        width: 45
+    },
+    tex: {
+        paddingRight: 115
+    },
+    teste: {
+        justifyContent: 'center'
     }
+ 
 
 })

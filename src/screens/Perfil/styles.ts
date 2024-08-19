@@ -22,11 +22,8 @@ export const styles = StyleSheet.create({
     },
 
     info: {
-        flexDirection: 'row',
         padding: 10,
-        borderColor: colors.black,
-       // borderBottomWidth: 1,
-        
+        borderColor: colors.black,        
     },
 
     infos: {
@@ -44,6 +41,8 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.gray,
         width: '95%',
         margin: 10,
+        marginBottom: 30,
+        marginTop: 30,
         padding: 10,
     },
 
@@ -66,13 +65,6 @@ export const styles = StyleSheet.create({
         width: 200,
     },
 
-    //tela: {
-    //    justifyContent: 'space-around',
-    //    flex: 1,
-    //},
-    sms: {
-        
-    },
     img: {
         height: 30,
         width: 45
@@ -82,7 +74,13 @@ export const styles = StyleSheet.create({
     },
     teste: {
         justifyContent: 'center'
-    }
+    },
+    l: {
+        flexDirection: "row",
+        marginTop: 20,
+        marginLeft: 12
+    },
+
  
 
 })

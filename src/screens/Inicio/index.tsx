@@ -1,10 +1,12 @@
-import React from 'react';
-import { View, Text, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TextInput } from 'react-native';
 import { styles } from './styles';
 import CustomButtonII from '../../components/CustomButtonII'
 
 
 export const Inicio = () => {
+    const [texto, setTexto] = useState('');
+
     const handlePress = () => {
         // Lógica a ser executada ao pressionar o botão
         console.log('Botão pressionado!');
@@ -19,17 +21,39 @@ export const Inicio = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.cefet}>
-                <Image source={cefet} style={styles.image}></Image>
-            </View>
-            <View style={styles.header}>
-                <Image source={titulo} style={styles.image2}></Image>
-            </View>
+            <View style={styles.tela}>
+                <View style={styles.cefet}>
+                    <Image source={cefet}></Image>
+                </View>
+                <View style={styles.header}>
+                    <Text style={styles.educacao}>EDUCAÇÃO</Text>
+                    <Text style={styles.fisica}>FÍSICA</Text>
+                    <Text style={styles.fisica2}>FÍSICA</Text>
 
-            <View style={styles.but}>
-                <CustomButtonII title="Checkins" onPress={handlePress} />
-            </View>
+                </View>
 
+                <Text style={styles.texto}>
+                    Bem vindo ao sistema de educação física do nosso campus.
+                </Text>
+                <View style={styles.login}>
+                    <TextInput
+                        value={texto}
+                        onChangeText={setTexto}
+                        placeholder="Usuário"
+                        style={styles.input}
+                    />
+                    <TextInput
+                        value={texto}
+                        onChangeText={setTexto}
+                        placeholder="Senha"
+                        style={styles.input}
+                    />
+
+                    <View style={styles.but}>
+                        <CustomButtonII title="Entrar" onPress={handlePress} />
+                    </View>
+                </View>
+            </View>
             <View style={styles.footer}>
                 <Text style={styles.text}>Ou entre em contato</Text>
                 <View style={styles.images}>

@@ -13,7 +13,7 @@ export function Ginasio({ setPageI }: IPagina) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.texto}>Checkins</Text>
+                <Text style={styles.texto}>RESERVAS</Text>
             </View>
             <View style={styles.botoes}>
                 <ButtonSlide title="Ginásio" onPressI={() => setPageI(2)} cor={true} />

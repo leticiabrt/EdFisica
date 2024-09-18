@@ -15,11 +15,11 @@ export function Times() {
 
     const [page, setPage] = useState(1)
 
-    if (page == 1) {
+    if (page == 2) {
         return (
             <JEMG setPageI={setPage} />
         );
-    } else if (page == 2) {
+    } else if (page == 1) {
         return (
             <Intercampi setPageI={setPage} />
         );

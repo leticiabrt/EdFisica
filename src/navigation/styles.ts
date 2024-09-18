@@ -2,9 +2,10 @@ import { StyleSheet } from "react-native";
 import {colors} from '../styles/globalstyles'
 
 export const styles = StyleSheet.create({
-    drawerStyle: {
+    cabecalho: {
+        width: 305,
+        height: 40,
         backgroundColor: colors.primary,
-        width: 240,
         
     },
 })

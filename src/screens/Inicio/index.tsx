@@ -14,10 +14,11 @@ export const Inicio = () => {
 
 
     const cefet = require('../../assets/cefet.png')
-    const titulo = require('../../assets/titulo.png')
+    const titulo = require('../../assets/cabecalho.png')
     const whats = require('../../assets/whats.png')
     const insta = require('../../assets/insta.png')
     const email = require('../../assets/email.png')
+
 
     return (
         <View style={styles.container}>
@@ -25,13 +26,11 @@ export const Inicio = () => {
                 <View style={styles.cefet}>
                     <Image source={cefet}></Image>
                 </View>
-                <View style={styles.header}>
-                    <Text style={styles.educacao}>EDUCAÇÃO</Text>
-                    <Text style={styles.fisica}>FÍSICA</Text>
-                    <Text style={styles.fisica2}>FÍSICA</Text>
-
+                <View style={styles.viewimg}>
+                    <Image source={titulo} style={styles.titulo}></Image>
                 </View>
-
+                
+                
                 <Text style={styles.texto}>
                     Bem vindo ao sistema de educação física do nosso campus.
                 </Text>

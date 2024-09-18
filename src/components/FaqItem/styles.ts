@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
       questionContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 5,
       },
       question: {
         fontSize: 18,

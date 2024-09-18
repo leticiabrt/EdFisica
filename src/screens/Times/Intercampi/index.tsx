@@ -46,6 +46,50 @@ export function Intercampi({ setPageI }: IPagina) {
               ["Marcela Selvatti", "2 Edif"],
             ],
           },
+        },
+        {
+          question: "Vôlei Feminino",
+          tableData: {
+            headers: ["Nome", "Turma"],
+            rows: [
+              ["Letícia Brito", "3 Info"],
+              ["Marcela Selvatti", "2 Edif"],
+            ],
+          },
+        },
+        {
+          question: "Vôlei Masculino",
+          tableData: {
+            headers: ["Nome", "Turma"],
+            rows: [
+              ["João Marcos Pereira", "3 Info"],
+              ["Gabriel de Barros", "3 Meca"],
+              ["João Marcos Pereira", "3 Info"],
+              ["Gabriel de Barros", "3 Meca"],
+            ],
+          },
+        },
+        {
+          question: "Basquete Feminino",
+          tableData: {
+            headers: ["Nome", "Turma"],
+            rows: [
+              ["Letícia Brito", "3 Info"],
+              ["Marcela Selvatti", "2 Edif"],
+            ],
+          },
+        },
+        {
+          question: "Basquete Masculino",
+          tableData: {
+            headers: ["Nome", "Turma"],
+            rows: [
+              ["João Marcos Pereira", "3 Info"],
+              ["Gabriel de Barros", "3 Meca"],
+              ["João Marcos Pereira", "3 Info"],
+               ["Gabriel de Barros", "3 Meca"],
+            ],
+          },
         },        
       ];
     

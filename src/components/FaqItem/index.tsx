@@ -27,7 +27,7 @@ export const FaqItem = ({ question, tableData }: faq) => {
         />
       </TouchableOpacity>
       {expanded && (
-        <ScrollView >
+        <ScrollView>
           <View style={styles.table}>
             <View style={styles.tableRow}>
               {tableData.headers.map((header, index) => (

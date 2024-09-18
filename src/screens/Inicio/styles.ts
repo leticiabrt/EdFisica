@@ -47,7 +47,6 @@ export const styles = StyleSheet.create({
 
     footer: {
         margin: 15,
-
     },
     input: {
         height: 50, 
@@ -80,34 +79,18 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around'
       },
-      educacao: {
-        fontSize: 40,
-        color: colors.primary,
-        fontWeight: 'bold',
-      },
-      fisica: {
-        fontSize: 40,
-        fontFamily: 'Open Sans', 
-        fontWeight: 'bold',
-        color: colors.secondary, // Cor do texto principal
-        textShadowColor: colors.primary, // Cor da borda
-        textShadowOffset: { width: -1, height: -1 }, // Offset da sombra
-        textShadowRadius: 1,
-        
-      },
-      fisica2: {
-        position: "absolute",
-        right: 15,
-        fontSize: 40,
-        fontFamily: 'Open Sans', 
-        fontWeight: 'bold',
-        color: colors.secondary, // Cor do texto principal
-        textShadowColor: colors.primary, // Cor da borda
-        textShadowOffset: { width: 1, height: 1 }, // Offset da sombra
-        textShadowRadius: 1,
-        
+     
+      titulo: {
+        width: 370,
+        height: 45,
       },
 
-
+      viewimg: {
+        width: '100%',
+        height: '10%',
+        backgroundColor: colors.primary,
+        alignItems: 'center',
+        justifyContent: 'center'
+      }
 
 })

@@ -14,7 +14,7 @@ export function Checkins() {
 
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.texto}>Checkins</Text>
+        <Text style={styles.texto}>CHECKINS</Text>
       </View>
 
       <View style={styles.table}>

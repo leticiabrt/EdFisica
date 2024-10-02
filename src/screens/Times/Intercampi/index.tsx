@@ -2,10 +2,13 @@ import { styles } from "./styles";
 import { ButtonSlide } from '../../../components/ButtonSlide';
 import { IPagina } from '../index';
 import { FaqItem } from '../../../components/FaqItem';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
+import React, {useState} from 'react';
 
 
 export function Intercampi({ setPageI }: IPagina) {
+  const [openItems, setOpenItems] = useState<number[]>([]);
+
     const faqData = [
         {
           question: "Handebol Feminino",
@@ -93,6 +96,14 @@ export function Intercampi({ setPageI }: IPagina) {
         },        
       ];
     
+      const toggleItem = (index: number) => {
+        if (openItems.includes(index)) {
+            setOpenItems(openItems.filter(i => i !== index)); // Fechar se já estiver aberto
+        } else {
+            setOpenItems([...openItems, index]); // Abrir item
+        }
+    };
+
       return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -102,9 +113,17 @@ export function Intercampi({ setPageI }: IPagina) {
                 <ButtonSlide title="JEMG" onPressI={() => setPageI(2)} cor={true} />
                 <ButtonSlide title="Intercampi" onPressI={() => setPageI(1)} cor={false} />
             </View>
-          {faqData.map((faq, index) => (
-            <FaqItem key={index} question={faq.question} tableData={faq.tableData} />
-          ))}
+            <ScrollView>
+                {faqData.map((faq, index) => (
+                    <FaqItem
+                        key={index}
+                        question={faq.question}
+                        tableData={faq.tableData}
+                        isOpen={openItems.includes(index)}
+                        onPress={() => toggleItem(index)}
+                    />
+                ))}
+            </ScrollView>
         </View>
       );
 };

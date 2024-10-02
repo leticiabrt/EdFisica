@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     images: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        
+
     },
     text: {
         textAlign: 'center',
@@ -46,10 +46,13 @@ export const styles = StyleSheet.create({
     },
 
     footer: {
-        margin: 15,
+        position: 'absolute', // Mantém o rodapé fixo na parte inferior
+        bottom: 0, 
+        width: '100%',        // Garante que o rodapé ocupe toda a largura
+        padding: 10,          // Espaçamento interno do rodapé
     },
     input: {
-        height: 50, 
+        height: 50,
         width: "60%",
         borderRadius: 20,
         margin: 20,
@@ -78,19 +81,19 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 10,
         flexDirection: 'row',
         justifyContent: 'space-around'
-      },
-     
-      titulo: {
+    },
+
+    titulo: {
         width: 370,
         height: 45,
-      },
+    },
 
-      viewimg: {
+    viewimg: {
         width: '100%',
         height: '10%',
         backgroundColor: colors.primary,
         alignItems: 'center',
         justifyContent: 'center'
-      }
+    }
 
 })

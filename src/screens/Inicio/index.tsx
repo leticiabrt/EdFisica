@@ -12,13 +12,11 @@ export const Inicio = () => {
         console.log('Botão pressionado!');
     };
 
-
     const cefet = require('../../assets/cefet.png')
     const titulo = require('../../assets/cabecalho.png')
     const whats = require('../../assets/whats.png')
     const insta = require('../../assets/insta.png')
     const email = require('../../assets/email.png')
-
 
     return (
         <View style={styles.container}>
@@ -29,8 +27,8 @@ export const Inicio = () => {
                 <View style={styles.viewimg}>
                     <Image source={titulo} style={styles.titulo}></Image>
                 </View>
-                
-                
+
+
                 <Text style={styles.texto}>
                     Bem vindo ao sistema de educação física do nosso campus.
                 </Text>
@@ -60,11 +58,7 @@ export const Inicio = () => {
                     <Image source={insta} style={styles.image4}></Image>
                     <Image source={email} style={styles.image3}></Image>
                 </View>
-
             </View>
-
-
-
         </View>
     );
 };

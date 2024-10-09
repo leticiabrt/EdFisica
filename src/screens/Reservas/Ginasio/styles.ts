@@ -5,17 +5,22 @@ import { colors } from "../../../styles/globalstyles"
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: '#F5F5F5',
   },
+  ajuste: {
+    padding: 16,
+  },
   header: {
-    marginBottom: 20,
+    backgroundColor: colors.secondary,
     alignItems: 'center',
+    justifyContent: 'center',
+        
   },
   texto: {
-    fontSize: 24,
+    color: colors.white,
     fontWeight: 'bold',
-    color: '#333',
+    fontSize: 20,
+    padding: 10,
   },
   botoes: {
     flexDirection: 'row',
@@ -75,10 +80,22 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 10,
     borderRadius: 5,
+    paddingVertical: 10,
   },
   switchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
   },
+  bot:{
+    marginBottom: 10,
+  },
+  text:{
+    fontWeight: 'bold',
+    fontSize: 17,
+  },
+  textt: {
+    margin: 10,
+    fontSize: 14,
+  }
 });

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Modal, TextInput, Switch, Button } from "react-native";
+import { View, Text, TouchableOpacity, Modal, TextInput, Switch } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from "./styles";
 import { ButtonSlide } from "../../../components/ButtonSlide";
@@ -24,7 +24,7 @@ export function Ginasio({ setPageI }) {
       setReservas([...reservas, novaReserva]);
       setModalVisible(false);
     } else {
-      alert("Preencha todos os campos e concorde com as regras.");
+      alert("Preencha todos os campos e concorde com as regras de uso.");
     }
   };
 
@@ -56,21 +56,32 @@ export function Ginasio({ setPageI }) {
         <ButtonSlide title="Quadra" onPressI={() => setPageI(1)} cor={false} />
       </View>
 
-      <View style={styles.table}>
-        {reservas.length === 0 ? (
-          <Text style={styles.text}>Nenhuma reserva registrada</Text>
-        ) : (
-          reservas.map((reserva, index) => (
-            <View style={styles.row} key={index}>
-              <Text style={styles.cell}>{reserva.data}</Text>
-              <Text style={styles.cell}>{reserva.horaInicio} - {reserva.horaFim}</Text>
-              <Text style={styles.cell}>Reservado</Text>
-            </View>
-          ))
-        )}
+      <View style={styles.ajuste}>
+        <View style={styles.table}>
+          {reservas.length === 0 ? (
+            <Text style={styles.textt}>Nenhuma reserva registrada</Text>
+          ) : (
+            reservas.map((reserva, index) => (
+              <View >
+                <View style={styles.row}>
+                  <Text style={styles.text}>Data</Text>
+                  <Text style={styles.text}>Horário</Text>
+                  <Text style={styles.text}>Responsável</Text>
+                </View>
+                <View style={styles.row} key={index}>
+                  <Text style={styles.cell}>{reserva.data}</Text>
+                  <Text style={styles.cell}>{reserva.horaInicio} - {reserva.horaFim}</Text>
+                  <Text style={styles.cell}>{reserva.responsavel}</Text>
+                </View>
+              </View>
+
+            ))
+          )}
+        </View>
+
+        <CustomButton title="Nova Reserva" onPress={() => setModalVisible(true)} />
       </View>
 
-      <CustomButton title="Nova Reserva" onPress={() => setModalVisible(true)} />
 
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalContainer}>
@@ -122,8 +133,13 @@ export function Ginasio({ setPageI }) {
               <Text>Li e concordo com as regras de uso</Text>
             </View>
 
-            <Button title="Confirmar Reserva" onPress={handleConfirmarReserva} />
-            <Button title="Cancelar" onPress={() => setModalVisible(false)} />
+            <View style={styles.bot}>
+              <CustomButton title="Confirmar Reserva" onPress={handleConfirmarReserva} />
+            </View>
+            <View>
+              <CustomButton title="Cancelar" onPress={() => setModalVisible(false)} />
+            </View>
+
           </View>
         </View>
       </Modal>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Modal, TextInput, Switch } from "react-native";
+import { View, Text, TouchableOpacity, Modal, TextInput, Button, Switch } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from "./styles";
 import { ButtonSlide } from "../../../components/ButtonSlide";
@@ -17,6 +17,7 @@ export function Ginasio({ setPageI }) {
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [reservas, setReservas] = useState([]);
+  const [filtroData, setFiltroData] = useState('');
 
   const handleConfirmarReserva = () => {
     if (data && horaInicio && horaFim && responsavel && finalidade && participantes && concorda) {
@@ -26,6 +27,10 @@ export function Ginasio({ setPageI }) {
     } else {
       alert("Preencha todos os campos e concorde com as regras de uso.");
     }
+  };
+
+  const handleCancelarReserva = (index) => {
+    setReservas(reservas.filter((_, i) => i !== index));
   };
 
   const handleChangeData = (event, selectedDate) => {
@@ -46,42 +51,60 @@ export function Ginasio({ setPageI }) {
     setHoraFim(currentTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }));
   };
 
+  const filteredReservas = filtroData
+    ? reservas.filter(reserva => reserva.data === filtroData)
+    : reservas;
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.texto}>RESERVAS</Text>
       </View>
       <View style={styles.botoes}>
-        <ButtonSlide title="Ginásio" onPressI={() => setPageI(2)} cor={true} />
-        <ButtonSlide title="Quadra" onPressI={() => setPageI(1)} cor={false} />
+        <ButtonSlide title="Quadra" onPressI={() => setPageI(2)} cor={true} />
+        <ButtonSlide title="Ginásio" onPressI={() => setPageI(1)} cor={false} />
       </View>
 
       <View style={styles.ajuste}>
+        <TextInput
+          style={styles.input}
+          placeholder="Filtrar por Data (dd/mm)"
+          value={filtroData}
+          onChangeText={setFiltroData}
+        />
+
         <View style={styles.table}>
-          {reservas.length === 0 ? (
-            <Text style={styles.textt}>Nenhuma reserva registrada</Text>
+          {filteredReservas.length === 0 ? (
+            <Text style={styles.textt}>Nenhuma reserva registrada para essa data</Text>
           ) : (
-            reservas.map((reserva, index) => (
-              <View >
-                <View style={styles.row}>
-                  <Text style={styles.text}>Data</Text>
-                  <Text style={styles.text}>Horário</Text>
-                  <Text style={styles.text}>Responsável</Text>
-                </View>
-                <View style={styles.row} key={index}>
-                  <Text style={styles.cell}>{reserva.data}</Text>
-                  <Text style={styles.cell}>{reserva.horaInicio} - {reserva.horaFim}</Text>
-                  <Text style={styles.cell}>{reserva.responsavel}</Text>
-                </View>
+            <>
+              {/* Cabeçalho da tabela renderizado uma vez */}
+              <View style={styles.row}>
+                <Text style={styles.text}>Data</Text>
+                <Text style={styles.text}>Horário</Text>
+                <Text style={styles.text}>Respons.</Text>
+                <Text style={styles.text}>Ação</Text>
               </View>
 
-            ))
+              {/* Listagem das reservas filtradas */}
+              {filteredReservas.map((reserva, index) => (
+                <View key={index}>
+                  <View style={styles.row}>
+                    <Text style={styles.cell}>{reserva.data}</Text>
+                    <Text style={styles.cell}>{reserva.horaInicio} - {reserva.horaFim}</Text>
+                    <Text style={styles.cell}>{reserva.responsavel}</Text>
+                    <TouchableOpacity onPress={() => handleCancelarReserva(index)}>
+                      <Text style={styles.cell1}>Cancelar</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+            </>
           )}
         </View>
 
         <CustomButton title="Nova Reserva" onPress={() => setModalVisible(true)} />
       </View>
-
 
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalContainer}>

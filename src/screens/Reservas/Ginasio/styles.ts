@@ -43,6 +43,12 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  cell1: {
+    fontSize: 16,
+    color: '#333',
+    backgroundColor: colors.gray,
+    padding: 5,
+  },
   cellReservado: {
     fontSize: 16,
     color: 'white',

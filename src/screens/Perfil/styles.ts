@@ -80,7 +80,15 @@ export const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 12
     },
-
+      row: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderColor: colors.black,
+        backgroundColor: colors.black,
+      },
+      
  
 
 })

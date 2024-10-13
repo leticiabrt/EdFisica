@@ -1,17 +1,45 @@
-import { ImageBackground, View, Text, Image } from "react-native";
-import { styles } from "./styles"
+import { ImageBackground, View, Text, Image, Alert } from "react-native"; // Importação do Alert
+import { styles } from "./styles";
 import { styleContainer } from "../../styles/globalstyles";
 import CustomButton from '../../components/CustomButton';
+import React, { useState } from 'react'; // Importando useState
 
+// Definindo uma interface para a atividade
+interface Atividade {
+  data: string;
+  nome: string;
+}
 
 export function Checkins() {
-  const handlePress = () => {
-    // Lógica a ser executada ao pressionar o botão
-    console.log('Botão pressionado!');
+  const [checkinsRealizados, setCheckinsRealizados] = useState<string[]>([]); // Estado para armazenar check-ins realizados
+
+  const handlePress = (atividade: string) => { // Adicionando tipo para o parâmetro
+    Alert.alert(
+      "Confirmação de Check-in",
+      "Certeza que deseja fazer check-in nessa atividade?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel"
+        },
+        {
+          text: "Sim",
+          onPress: () => {
+            setCheckinsRealizados((prev) => [...prev, atividade]); // Adiciona a atividade aos check-ins realizados
+          }
+        }
+      ]
+    );
   };
 
-  return (
+  // Lista de atividades
+  const atividades: Atividade[] = [
+    { data: '16/10', nome: 'Treino Vôlei Misto' },
+    { data: '16/10', nome: 'Treino Handebol Feminino' },
+    { data: '18/10', nome: 'Amistoso Handebol Feminino' }
+  ];
 
+  return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.texto}>CHECKINS</Text>
@@ -23,23 +51,20 @@ export function Checkins() {
           <Text style={styles.text}>Atividade</Text>
           <Text style={styles.text}>Checkin</Text>
         </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>data</Text>
-          <Text style={styles.cell}>treino</Text>
-          <View style={styles.botao}>
-            <CustomButton title="Checkin" onPress={handlePress} />
+        {atividades.map((atividade, index) => (
+          <View style={styles.row} key={index}>
+            <Text style={styles.cell}>{atividade.data}</Text>
+            <Text style={styles.cell}>{atividade.nome}</Text>
+            <View style={styles.botao}>
+              {checkinsRealizados.includes(atividade.nome) ? ( // Verifica se o check-in foi realizado
+                <Text style={{ color: 'green', textAlign: 'center' }}>Check-in realizado</Text>
+              ) : (
+                <CustomButton title="Checkin" onPress={() => handlePress(atividade.nome)} />
+              )}
+            </View>
           </View>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>data</Text>
-          <Text style={styles.cell}>amistoso</Text>
-          <View style={styles.botao}>
-            <CustomButton title="Checkin" onPress={handlePress} />
-          </View>
-        </View>
+        ))}
       </View>
     </View>
   );
-};
-
-
+}

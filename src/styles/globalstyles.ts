@@ -10,7 +10,8 @@ export const colors={
 
 export const styleContainer = StyleSheet.create({
     container:{
-        flex: 1
+        flex: 1,
+        backgroundColor: '#f0f4f7',
     }
 }
 )

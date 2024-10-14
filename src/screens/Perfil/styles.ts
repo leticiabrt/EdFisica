@@ -44,12 +44,14 @@ export const styles = StyleSheet.create({
         marginBottom: 30,
         marginTop: 30,
         padding: 10,
+        borderRadius: 20,
     },
 
     title: {
         color: colors.black,
         fontWeight: 'bold',
         fontSize: 17,
+        padding: 5,
     },
 
     text: {

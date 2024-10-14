@@ -33,11 +33,17 @@ export function Checkins() {
   };
 
   // Lista de atividades
-  const atividades: Atividade[] = [
-    { data: '16/10', nome: 'Treino Vôlei Misto' },
-    { data: '16/10', nome: 'Treino Handebol Feminino' },
-    { data: '18/10', nome: 'Amistoso Handebol Feminino' }
+    const atividades: Atividade[] = [
+      { data: '16/10', nome: 'Treino Vôlei Misto' },
+      { data: '16/10', nome: 'Treino Handebol Feminino' },
+      { data: '18/10', nome: 'Amistoso Handebol Feminino' },
+      { data: '18/10', nome: 'Treino Futsal Masculino' },
+      { data: '19/10', nome: 'Amistoso Vôlei Feminino' },
+      { data: '20/10', nome: 'Treino Basquete Masculino' },
+      { data: '21/10', nome: 'Competição de Orientação' },
+      { data: '22/10', nome: 'Treino Futsal Misto' }
   ];
+  
 
   return (
     <View style={styles.container}>

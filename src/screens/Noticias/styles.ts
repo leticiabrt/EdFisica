@@ -23,19 +23,28 @@ export const styles = StyleSheet.create({
 
     caixa: {
         backgroundColor: colors.gray,
-        justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 20,
+        borderRadius: 20,
+        margin: 10,
     },
     
     noticias: {
         flex: 1,
-        justifyContent: 'space-around',
-        alignItems: 'stretch',
         flexDirection: 'column',
         paddingStart: 20,
         paddingRight: 20,
     },
 
+    tituloNoticia: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+
+    textoNoticia: {
+        fontSize: 14,
+        textAlign: 'justify',
+    },
     
 })

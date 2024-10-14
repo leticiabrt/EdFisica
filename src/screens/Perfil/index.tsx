@@ -125,7 +125,7 @@ export const Perfil = () => {
 
       <View style={styles.info}>
         <View style={styles.l}>
-          <Image source={perfil}></Image>
+          <Image style={{borderRadius: 20}} source={perfil}></Image>
           <View style={styles.infos}>
             <Text style={styles.title}>NOME: </Text>
             <Text style={styles.title}>TURMA: </Text>
@@ -140,7 +140,7 @@ export const Perfil = () => {
               value={texto}
               onChangeText={setTexto}
               placeholder="Digite aqui"
-              style={{ height: 200, borderColor: 'black', borderWidth: 1, padding: 5 }}
+              style={{ height: 200, borderColor: 'black', borderWidth: 1, padding: 5, borderRadius: 20 }}
             />
           </View>
         </View>

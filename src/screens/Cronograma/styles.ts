@@ -35,6 +35,7 @@ export const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         borderColor: colors.black,
+        
     },
     cell: {
         flex: 1,

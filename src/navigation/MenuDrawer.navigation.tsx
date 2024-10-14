@@ -1,5 +1,5 @@
 import { DrawerNavigationProp, createDrawerNavigator } from '@react-navigation/drawer';
-import { Noticias, Checkins, Cronograma, Perfil, Reservas, Times, Testes, Inicio } from '../screens';
+import { Noticias, Checkins, Cronograma, Perfil, Reservas, Times, Testes, Inicio, Cronograma2 } from '../screens';
 import { styles } from "./styles";
 import { colors } from '../styles/globalstyles'
 import { Image } from 'react-native';
@@ -11,7 +11,7 @@ type MenuDrawerParam = {
     Perfil: undefined
     Reservas: undefined
     Times: undefined
-    Testes: undefined
+    Cronograma2: undefined
     Inicio: undefined
 }
 type MenuScreenNavigation = DrawerNavigationProp<MenuDrawerParam, "Noticias">
@@ -38,7 +38,7 @@ export function MenuDrawer() {
             <Drawer.Screen name="Perfil" component={Perfil} />
             <Drawer.Screen name="Reservas" component={Reservas} />
             <Drawer.Screen name="Times" component={Times} />
-            <Drawer.Screen name="Testes" component={Testes} />
+            <Drawer.Screen name="Cronograma2" component={Cronograma2} />
             <Drawer.Screen name="Inicio" component={Inicio} />
         </Drawer.Navigator>
          

@@ -34,11 +34,10 @@ export function MenuDrawer() {
         }} >
             <Drawer.Screen name="Noticias" component={Noticias} />
             <Drawer.Screen name="Checkins" component={Checkins} />
-            <Drawer.Screen name="Cronograma" component={Cronograma} />
             <Drawer.Screen name="Perfil" component={Perfil} />
             <Drawer.Screen name="Reservas" component={Reservas} />
             <Drawer.Screen name="Times" component={Times} />
-            <Drawer.Screen name="Cronograma2" component={Cronograma2} />
+            <Drawer.Screen name="Cronograma" component={Cronograma2} />
             <Drawer.Screen name="Inicio" component={Inicio} />
         </Drawer.Navigator>
          

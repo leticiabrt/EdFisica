@@ -46,5 +46,10 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'justify',
     },
+    horarioNoticia: {
+        color: 'gray',
+        width: '100%',
+        
+    }
     
 })

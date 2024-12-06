@@ -1,24 +1,47 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput } from 'react-native';
+import { View, Text, Image, TextInput, Alert } from 'react-native';
 import { styles } from './styles';
 import CustomButtonII from '../../components/CustomButtonII';
+import { MaterialIcons, Entypo } from "@expo/vector-icons";
+import { useAuth } from "../../hook/auth";
+import { apiUser } from "../../services/data";
+import { AxiosError } from "axios";
 
+export interface ILogin {
+    email?: string
+    password?: string
+}
 
-export const Inicio = () => {
-    const [usuario, setUsuario] = useState('');
-    const [senha, setSenha] = useState('');
+export function Inicio() {
+    const [data, setData] = useState<ILogin>();
+    const {signIn, setLoading} = useAuth()
 
-    const handlePress = () => {
-        // Lógica a ser executada ao pressionar o botão
-        console.log('Botão pressionado!');
-    };
+    async function handleLogin() {
+        if (data?.email && data?.password) {
+            setLoading(true)
+            console.log(data)
+            try {
+                const resposta = await signIn(data)
+            } catch (error) {
+                console.log(error)
+                const err = error as AxiosError
+                const msg = err.response?.data as string
+            }
+            setLoading(false)
+        } else {
+            Alert.alert("Preencha todos os campos!!!")
+        }
+    }
+
+    function handleChange(item: ILogin) {
+        setData({ ...data, ...item });
+    }
 
     const cefet = require('../../assets/cefet.png');
     const titulo = require('../../assets/cabecalho.png');
     const whats = require('../../assets/whats.png');
     const insta = require('../../assets/insta.png');
     const email = require('../../assets/email.png');
-
     return (
         <View style={styles.container}>
             <View style={styles.tela}>
@@ -34,21 +57,21 @@ export const Inicio = () => {
                 </Text>
                 <View style={styles.login}>
                     <TextInput
-                        value={usuario}
-                        onChangeText={setUsuario}
-                        placeholder="Usuário"
+                        onChangeText={(i) => handleChange({ email: i })}
+                        placeholder="Email"
                         style={styles.input}
+                        autoCapitalize='none'
                     />
                     <TextInput
-                        value={senha}
-                        onChangeText={setSenha}
+                        onChangeText={(i) => handleChange({ password: i })}
                         placeholder="Senha"
                         style={styles.input}
                         secureTextEntry={true} // Aqui o campo será cifrado
+                        autoCapitalize='none'
                     />
 
                     <View style={styles.but}>
-                        <CustomButtonII title="Entrar" onPress={handlePress} />
+                        <CustomButtonII title="Entrar" onPress={handleLogin} />
                     </View>
                 </View>
             </View>

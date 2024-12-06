@@ -1,16 +1,16 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { View, Text } from 'react-native';
-import { ComponentHeader, ComponentFooter } from './src/components';
 import { Navigation } from './src/navigation';
+import { AuthProvider } from './src/context/auth';
 
 const App = () => {
   return (
-    
-      <Navigation>
-       
-      </Navigation>
-      
+    <>
+      <AuthProvider>
+        <Navigation />
+      </AuthProvider>
+    </>
   );
 };
 

@@ -49,7 +49,12 @@ export const styles = StyleSheet.create({
 
     title: {
         color: colors.black,
-        fontWeight: 'bold',
+        fontWeight: '700',
+        fontSize: 17,
+        padding: 5,
+    },
+    subtitle: {
+        fontWeight: '400',
         fontSize: 17,
         padding: 5,
     },
@@ -90,7 +95,73 @@ export const styles = StyleSheet.create({
         borderColor: colors.black,
         backgroundColor: colors.black,
       },
-      
+      botaoSair: {
+        padding: 15,
+        borderRadius: 5,
+        alignItems: 'center',
+      },
+      botaoSairTexto: {
+        color: "red",
+        fontWeight: '900',
+        fontSize: 15
+      },
+      horarioTabela: {
+        fontWeight: '700',
+        fontSize: 18,
+        color: 'black',
+      },
+      atividadeTabela: {
+        fontWeight: '400',
+        fontSize: 18,
+        color: 'gray',
+      },
+      responsavelTabela: {
+        fontWeight: '400',
+        fontSize: 16,
+        color: 'gray',
+      },
+      tableDado: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        marginBottom: 15,
+        shadowColor: '#000', // Sombra
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 3,
+        width: '100%'
+    
+      },
+      localTabela: {
+        fontWeight: '400',
+        fontSize: 18,
+        color: 'gray',
+      },
+      Cancelar: {
+        fontWeight: "800",
+        color: "red",
+        width: 250,
+        paddingTop: 20
+      },
+      viewLinhaTabela: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
+      },
+      numeroParticipantes: {
+        display: 'flex',
+      },
+      localReserva: {
+        fontWeight: '400',
+        fontSize: 16,
+        color: 'gray',
+      },
+      finalidadeReserva: {
+        fontWeight: '400',
+        fontSize: 20,
+        color: 'gray',
+      }
  
 
 })

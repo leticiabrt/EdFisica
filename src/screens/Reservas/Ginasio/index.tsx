@@ -1,58 +1,140 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Modal, TextInput, Switch } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, Modal, TextInput, Switch, Alert } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from "./styles";
 import { ButtonSlide } from "../../../components/ButtonSlide";
 import CustomButton from "../../../components/CustomButton";
+import { useAuth } from "../../../hook/auth";
+import { apiReserva } from "../../../services/data";
+import { IReserva, IResponseReserva } from "../../../services/data/Reserva";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
+import { AxiosError } from "axios";
 
-export function Ginasio({ setPageI }) {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [data, setData] = useState('');
-    const [horaInicio, setHoraInicio] = useState(new Date()); // Armazena hora de início
-    const [horaFim, setHoraFim] = useState(new Date()); // Armazena hora de fim
-    const [responsavel, setResponsavel] = useState('');
-    const [finalidade, setFinalidade] = useState('');
-    const [participantes, setParticipantes] = useState('');
-    const [concorda, setConcorda] = useState(false);
+export interface IReservaDados {
+    idReserva?: number,
+    dia?: string,
+    horarioInicio?: string,
+    horarioFim?: string,
+    finalidade?: string,
+    tipo?: string,
+    numeroPessoas?: string,
+}
+
+export function Ginasio({ setPageI }: any) {
+
+    const [modalVisible, setModalVisible] = useState(false); // modal para cadastrar uma reserva
+    const [modalVisibleAlert, setModalVisibleAlert] = useState(false); //modal para alertar sobre uma reserva feita
+
+    const [concorda, setConcorda] = useState(false); // Switch para o termo de uso
     const [concorda2, setConcorda2] = useState(false); // Switch para reserva regular
+
+    const [filtroData, setFiltroData] = useState('');
+
+    /*Variaveis pra utilizar o relógio como campo*/
+    const [horarioInicio, setHorarioInicio] = useState(new Date())
+    const [horarioFim, setHorarioFim] = useState(new Date())
+
+    // Não faço ideia
     const [isDatePickerVisible, setDatePickerVisible] = useState(false);
     const [isStartTimePickerVisible, setStartTimePickerVisible] = useState(false);
     const [isEndTimePickerVisible, setEndTimePickerVisible] = useState(false);
-    const [reservas, setReservas] = useState([]);
-    const [filtroData, setFiltroData] = useState('');
 
-    const handleConfirmarReserva = () => {
-        if (data && horaInicio && horaFim && responsavel && finalidade && participantes && concorda) {
-            const novaReserva = { 
-                data, 
-                horaInicio, 
-                horaFim, 
-                responsavel, 
-                finalidade, 
-                participantes 
-            };
-            setReservas([...reservas, novaReserva]);
-            setModalVisible(false);
-        } else {
-            alert("Preencha todos os campos e concorde com as regras de uso.");
+    /*Lógica de listar as reservas*/
+    const [reserva, setReserva] = useState<IReserva[]>([])
+    const { setLoading, user } = useAuth()
+    useEffect(() => {
+        setLoading(true)
+        async function loadMessage() {
+            const response = await apiReserva.index()
+            setReserva(response.data.dados)
         }
-    };
+        setLoading(false)
+        loadMessage()
+    }, [])
 
-    const handleCancelarReserva = (index) => {
-        // Função para cancelar a reserva
-        setReservas(reservas.filter((_, i) => i !== index));
-    };
+    interface itemMessage {
+        item: IReserva
+    }
+
+    // foreach para percorrer todas reservas
+    const renderItem = (({ item }: itemMessage) => {
+        if (item.local == 'Ginásio' && item.status == 'A') {
+            return (
+                <View style={styles.tableDado}>
+                    <Text style={styles.horarioTabela}>Dia: {item.dia} ({item.horarioInicio} - {item.horarioFim})</Text>
+                    <Text style={styles.atividadeTabela}>{item.finalidade}</Text>
+                    <Text style={styles.responsavelTabela}>Responsável: {item.nomeAluno}</Text>
+                </View>
+            )
+        } else {
+            return (
+                <View> </View>
+            )
+        }
+    })
+
+    /*Lógica de cadastrar uma reserva*/
+    const [data, setData] = useState<IReserva>();
+    async function handleCadReserva() {
+        if (data?.dia && data.finalidade && data.horarioFim && data.horarioInicio && data.numeroPessoas) {
+            setLoading(true)
+            try {
+                await apiReserva.store({ ...data, idAluno: user?.data.id, status: 'P', local: 'Ginásio', tipo: 'normal' })
+                Alert.alert("Reserva regsitrada!", "Aguarde a professora Gabriela aceitá-la...")
+            } catch (error) {
+                const err = error as AxiosError
+                const msg = err.response?.data as string
+                console.log(err)
+            }
+            setLoading(false)
+        } else {
+            Alert.alert("Preencha todos os campos!!!")
+        }
+    }
+
+    function handleChange(item: IReservaDados) {
+        setData({ ...data, ...item });
+        console.log(data)
+    }
+
+    // Variaveis para poder utilizar o calendario e o relógio
+    const [horaInicio, setHoraInicio] = useState(new Date());
+    const [horaFim, setHoraFim] = useState(new Date());
+    const [date, setDate] = useState(new Date()) // data para ser utilizada no calendario
+    const [dateString, setDateString] = useState('') // data para salvar no bd
 
     const handleChangeData = (event, selectedDate) => {
         const currentDate = selectedDate || data;
         setDatePickerVisible(false);
-        setData(currentDate.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }));
+
+        /*Formata a data para salvar no BD, no formato dd-mm-yy*/
+        const diaBD = currentDate.toLocaleDateString({
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit',
+        }).replace(/\//g, '-');
+
+        /*Formata a data para mostrar no formato dd/mm/yy*/
+        const diaListar = currentDate.toLocaleDateString({
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit',
+        }).replace(/\//g, '/');
+
+        setDate(diaListar) //salva a data para passar pro calendario (formatt diferentão)
+
+        // Formata a data para salvar no BD no formato yy-mm-dd
+        const dia2Formatted = diaBD.split('-').reverse().join('-');
+        setDateString(diaBD) // salva a data em stirng para poder listar
+        handleChange({ dia: dia2Formatted })
     };
 
     const handleChangeHoraInicio = (event, selectedTime) => {
         if (event.type === "set") {
             setStartTimePickerVisible(false);
-            setHoraInicio(selectedTime); // Atualiza a hora de início
+            setHoraInicio(selectedTime);
+            const hInicio = selectedTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+            handleChange({ horarioInicio: hInicio })
         } else {
             setStartTimePickerVisible(false);
         }
@@ -61,79 +143,57 @@ export function Ginasio({ setPageI }) {
     const handleChangeHoraFim = (event, selectedTime) => {
         if (event.type === "set") {
             setEndTimePickerVisible(false);
-            setHoraFim(selectedTime); // Atualiza a hora de fim
+            setHoraFim(selectedTime);
+            const hFim = selectedTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+            handleChange({ horarioFim: hFim })
         } else {
             setEndTimePickerVisible(false);
         }
     };
 
-    // Lógica de filtragem por dia e mês
-    const filteredReservas = filtroData
-        ? reservas.filter(reserva => {
-            const reservaData = reserva.data.split('/'); // Divide a data armazenada
-            const filtroParts = filtroData.split('/'); // Divide a data do filtro
-            return reservaData[0] === filtroParts[0] && reservaData[1] === filtroParts[1]; // Compara dia e mês
-        })
-        : reservas;
-
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.texto}>RESERVAS</Text>
+                <Text style={styles.texto}></Text>
             </View>
             <View style={styles.botoes}>
                 <ButtonSlide title="Quadra" onPressI={() => setPageI(2)} cor={true} />
                 <ButtonSlide title="Ginásio" onPressI={() => setPageI(1)} cor={false} />
             </View>
 
-            <View style={styles.ajuste}>
+            <ScrollView style={styles.ajuste}>
                 <TextInput
                     style={styles.input}
                     placeholder="Filtrar por Data (dd/mm)"
-                    value={filtroData}
-                    onChangeText={setFiltroData}
+                /* value={filtroData}
+                 onChangeText={setFiltroData}*/
                 />
 
-                <View style={styles.table}>
-                    {filteredReservas.length === 0 ? (
-                        <Text style={styles.textt}>Nenhuma reserva registrada para essa data</Text>
-                    ) : (
-                        <>
-                            {/* Cabeçalho da tabela */}
-                            <View style={styles.row}>
-                                <Text style={styles.text}>Data</Text>
-                                <Text style={styles.text}>Horário</Text>
-                                <Text style={styles.text}>Respons.</Text>
-                                <Text style={styles.text}>Ação</Text>
-                            </View>
+                <>
 
-                            {/* Listagem das reservas */}
-                            {filteredReservas.map((reserva, index) => (
-                                <View key={index}>
-                                    <View style={styles.row}>
-                                        <Text style={styles.cell}>{reserva.data}</Text>
-                                        <Text style={styles.cell}>{reserva.horaInicio.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} - {reserva.horaFim.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</Text>
-                                        <Text style={styles.cell}>{reserva.responsavel}</Text>
-                                        <TouchableOpacity onPress={() => handleCancelarReserva(index)}>
-                                            <Text style={styles.cell1}>Cancelar</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            ))}
-                        </>
-                    )}
-                </View>
+                    {
+                        reserva.length > 0 && (
+                            <FlatList
+                                style={styles.flatlist}
+                                data={reserva}
+                                renderItem={renderItem}
+                                keyExtractor={item => String(item.idReserva)}
+                            />
+                        )
+                    }
+                </>
 
                 <CustomButton title="Nova Reserva" onPress={() => setModalVisible(true)} />
-            </View>
+            </ScrollView>
 
             <Modal animationType="slide" transparent={true} visible={modalVisible}>
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Nova Reserva</Text>
 
+
                         <TouchableOpacity onPress={() => setDatePickerVisible(true)}>
-                            <Text style={styles.input}>Data: {data}</Text>
+                            <Text style={styles.input}>Data: {dateString}</Text>
                         </TouchableOpacity>
                         {isDatePickerVisible && (
                             <DateTimePicker value={new Date()} mode="date" display="default" onChange={handleChangeData} />
@@ -153,24 +213,23 @@ export function Ginasio({ setPageI }) {
                             <DateTimePicker value={horaFim} mode="time" display="default" onChange={handleChangeHoraFim} />
                         )}
 
+
+
                         <TextInput
-                            style={styles.input}
-                            placeholder="Responsável"
-                            value={responsavel}
-                            onChangeText={setResponsavel}
+                            style={styles.idAluno}
+                            placeholder="Aluno"
                         />
+
                         <TextInput
                             style={styles.input}
                             placeholder="Finalidade"
-                            value={finalidade}
-                            onChangeText={setFinalidade}
+                            onChangeText={(i) => handleChange({ finalidade: i })}
                         />
                         <TextInput
                             style={styles.input}
                             placeholder="Número de Participantes"
-                            value={participantes}
-                            onChangeText={setParticipantes}
                             keyboardType="numeric"
+                            onChangeText={(i) => handleChange({ numeroPessoas: i })}
                         />
                         <View style={styles.switchContainer}>
                             <Switch value={concorda} onValueChange={setConcorda} />
@@ -182,7 +241,7 @@ export function Ginasio({ setPageI }) {
                         </View>
 
                         <View style={styles.bot}>
-                            <CustomButton title="Confirmar Reserva" onPress={handleConfirmarReserva} />
+                            <CustomButton title="Confirmar Reserva" onPress={handleCadReserva} />
                         </View>
                         <View>
                             <CustomButton title="Cancelar" onPress={() => setModalVisible(false)} />

@@ -8,7 +8,9 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   ajuste: {
-    padding: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+    marginBottom: 30
   },
   header: {
     backgroundColor: colors.secondary,
@@ -99,9 +101,52 @@ export const styles = StyleSheet.create({
   text:{
     fontWeight: 'bold',
     fontSize: 17,
+    paddingLeft: 30
   },
   textt: {
     margin: 10,
     fontSize: 14,
+  },
+  mensagem: {
+    backgroundColor: "rgb(159, 217, 227)",
+    marginTop: 20,
+    marginBottom: 20,
+    height: 160,
+    borderRadius: 10,
+    width: 300,
+    padding: 10
+  },
+  tableDado: {
+    backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        marginBottom: 15,
+        shadowColor: '#000', // Sombra
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 3,
+
+  },
+  flatlist: {
+    width: '100%',
+  },
+  idAluno: {
+    display: 'none',
+  },
+  horarioTabela: {
+    fontWeight: '800',
+    fontSize: 22,
+    color: 'black',
+  },
+  atividadeTabela: {
+    fontWeight: '400',
+    fontSize: 18,
+    color: 'gray',
+  },
+  responsavelTabela: {
+    fontWeight: '400',
+    fontSize: 16,
+    color: 'gray',
   }
 });

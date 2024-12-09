@@ -14,6 +14,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 export function Checkins() {
   const [checkinsRealizados, setCheckinsRealizados] = useState<string[]>([]); // Estado para armazenar check-ins realizados
+  const [recarregar, setRecarregar] = useState(0)
 
   const handlePress = (atividade: string) => { // Adicionando tipo para o parâmetro
     Alert.alert(
@@ -127,7 +128,7 @@ export function Checkins() {
     }
     setLoading(false)
     loadMessage()
-  }, [])
+  }, [recarregar])
 
   return (
     <View style={styles.container}>
@@ -144,6 +145,9 @@ export function Checkins() {
           />
         )
       }
+      <TouchableOpacity onPress={() => setRecarregar(recarregar + 1)}>
+        <Text>Recarregar página</Text>
+      </TouchableOpacity>
 
     </View>
   );

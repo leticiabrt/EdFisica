@@ -112,6 +112,7 @@ export function Checkins() {
   const [treino, setTreino] = useState<ITreino[]>([])
   const [checkins, setCheckins] = useState<ICheckin[]>([])
   const { setLoading, user } = useAuth()
+
   useEffect(() => {
     setLoading(true)
     async function loadMessage() {

@@ -20,7 +20,7 @@ export interface IReservaDados {
     numeroPessoas?: string,
 }
 
-export function Ginasio({ setPageI }: any) {
+export function Ginasio() {
 
     const [modalVisible, setModalVisible] = useState(false); // modal para cadastrar uma reserva
     const [modalVisibleAlert, setModalVisibleAlert] = useState(false); //modal para alertar sobre uma reserva feita
@@ -28,13 +28,13 @@ export function Ginasio({ setPageI }: any) {
     const [concorda, setConcorda] = useState(false); // Switch para o termo de uso
     const [concorda2, setConcorda2] = useState(false); // Switch para reserva regular
 
-    const [filtroData, setFiltroData] = useState('');
+    const [local, setLocal] = useState(false);
 
     /*Variaveis pra utilizar o relógio como campo*/
     const [horarioInicio, setHorarioInicio] = useState(new Date())
     const [horarioFim, setHorarioFim] = useState(new Date())
 
-    // Não faço ideia
+    // Para utilizar os calendarios e os relogios
     const [isDatePickerVisible, setDatePickerVisible] = useState(false);
     const [isStartTimePickerVisible, setStartTimePickerVisible] = useState(false);
     const [isEndTimePickerVisible, setEndTimePickerVisible] = useState(false);
@@ -58,7 +58,15 @@ export function Ginasio({ setPageI }: any) {
 
     // foreach para percorrer todas reservas
     const renderItem = (({ item }: itemMessage) => {
-        if (item.local == 'Ginásio' && item.status == 'A') {
+        if (item.local == 'Quadra' && item.status == 'A' && (local == true)) {
+            return (
+                <View style={styles.tableDado}>
+                    <Text style={styles.horarioTabela}>Dia: {item.dia} ({item.horarioInicio} - {item.horarioFim})</Text>
+                    <Text style={styles.atividadeTabela}>{item.finalidade}</Text>
+                    <Text style={styles.responsavelTabela}>Responsável: {item.nomeAluno}</Text>
+                </View>
+            )
+        } else if (item.local == 'Ginásio' && item.status == 'A' && (local == false)){
             return (
                 <View style={styles.tableDado}>
                     <Text style={styles.horarioTabela}>Dia: {item.dia} ({item.horarioInicio} - {item.horarioFim})</Text>
@@ -79,7 +87,11 @@ export function Ginasio({ setPageI }: any) {
         if (data?.dia && data.finalidade && data.horarioFim && data.horarioInicio && data.numeroPessoas) {
             setLoading(true)
             try {
-                await apiReserva.store({ ...data, idAluno: user?.data.id, status: 'P', local: 'Ginásio', tipo: 'normal' })
+                if (local == false) {
+                    await apiReserva.store({ ...data, idAluno: user?.data.id, status: 'P', local: 'Ginásio', tipo: 'normal' })
+                } else {
+                    await apiReserva.store({ ...data, idAluno: user?.data.id, status: 'P', local: 'Quadra', tipo: 'normal' })
+                }
                 Alert.alert("Reserva regsitrada!", "Aguarde a professora Gabriela aceitá-la...")
             } catch (error) {
                 const err = error as AxiosError
@@ -157,20 +169,12 @@ export function Ginasio({ setPageI }: any) {
                 <Text style={styles.texto}></Text>
             </View>
             <View style={styles.botoes}>
-                <ButtonSlide title="Quadra" onPressI={() => setPageI(2)} cor={true} />
-                <ButtonSlide title="Ginásio" onPressI={() => setPageI(1)} cor={false} />
+                <ButtonSlide title="Quadra" onPressI={() => setLocal(true)} cor={!local} />
+                <ButtonSlide title="Ginásio" onPressI={() => setLocal(false)} cor={local} />
             </View>
 
             <ScrollView style={styles.ajuste}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Filtrar por Data (dd/mm)"
-                /* value={filtroData}
-                 onChangeText={setFiltroData}*/
-                />
-
                 <>
-
                     {
                         reserva.length > 0 && (
                             <FlatList

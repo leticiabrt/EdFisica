@@ -5,11 +5,12 @@ import CustomButtonII from '../../components/CustomButtonII';
 import { useAuth } from "../../hook/auth";
 import { FlatList } from 'react-native-gesture-handler';
 import { ITreino } from '../../services/data/Treino';
-import { apiReserva, apiTreino } from '../../services/data';
+import { apiReserva, apiTime, apiTreino } from '../../services/data';
 import { AxiosError } from 'axios';
 import { MaterialIcons } from '@expo/vector-icons';
 import { IReserva } from '../../services/data/Reserva';
 import { set } from 'date-fns';
+import { IJogo, ITime } from '../../services/data/Time';
 
 // Define o tipo para as notificações
 type Notificacao = {
@@ -48,12 +49,10 @@ export const Perfil = () => {
     async function loadMessage() {
       try {
         const response = await apiTreino.mostrarCheckins({ idAluno: user?.data.id })
-        console.log(response.data.checkins)
         setTreino(response.data.dados)
       } catch (error) {
         const err = error as AxiosError
         const msg = err.response?.data as string
-        console.log(msg)
       }
     }
     setLoading(false)
@@ -69,7 +68,6 @@ export const Perfil = () => {
     } catch (error) {
       const err = error as AxiosError
       const msg = err.response?.data as string
-      console.log(msg)
     }
     setLoading(false)
   }
@@ -80,24 +78,30 @@ export const Perfil = () => {
 
   // foreach para percorrer todos treinos que o aluno tem checkin
   const renderItemCheckin = (({ item }: itemTreino) => {
-    return (
-      <View style={styles.tableDado}>
-        <Text style={styles.horarioTabela}>Dia: {item.dia} ({item.horarioInicio} - {item.horarioFim})</Text>
-        <Text style={styles.localTabela}>Local: {item.local}</Text>
-        <Text style={styles.atividadeTabela}>Atividade: {item.nomeModalidade}</Text>
-        <View style={styles.viewLinhaTabela}>
-          <TouchableOpacity onPress={() => { handleCadReserva(item.idTreino as unknown as string) }}>
-            <Text style={styles.Cancelar}>Cancelar checkin</Text>
-          </TouchableOpacity>
+    if (item) {
+      return (
+        <View style={styles.tableDado}>
+          <Text style={styles.horarioTabela}>Dia: {item.dia} ({item.horarioInicio} - {item.horarioFim})</Text>
+          <Text style={styles.localTabela}>Local: {item.local}</Text>
+          <Text style={styles.atividadeTabela}>Atividade: {item.nomeModalidade}</Text>
+          <View style={styles.viewLinhaTabela}>
+            <TouchableOpacity onPress={() => { handleCadReserva(item.idTreino as unknown as string) }}>
+              <Text style={styles.Cancelar}>Cancelar checkin</Text>
+            </TouchableOpacity>
 
-          <View style={styles.numeroParticipantes}>
-            <MaterialIcons name={"people"} size={25} />
-            <Text>{item.vagasOcupadas}/{item.numeroMaximoParticipantes}</Text>
+            <View style={styles.numeroParticipantes}>
+              <MaterialIcons name={"people"} size={25} />
+              <Text>{item.vagasOcupadas}/{item.numeroMaximoParticipantes}</Text>
+            </View>
           </View>
-        </View>
 
-      </View>
-    )
+        </View>
+      )
+    } else {
+      return (
+        <View></View>
+      )
+    }
 
   })
 
@@ -109,7 +113,7 @@ export const Perfil = () => {
   useEffect(() => {
     setLoading(true)
     async function loadMessage() {
-      const response = await apiReserva.mostrarReservas({idAluno: user?.data.id})
+      const response = await apiReserva.mostrarReservas({ idAluno: user?.data.id })
       setReserva(response.data.dados)
     }
     setLoading(false)
@@ -122,7 +126,8 @@ export const Perfil = () => {
 
   // foreach para percorrer todas reservas
   const renderItemReserva = (({ item }: itemReserva) => {
-    if (item.local == 'Ginásio' && item.status == 'A') {
+    console.log(reserva)
+    if (item) {
       return (
         <View style={styles.tableDado}>
           <Text style={styles.horarioTabela}>Dia: {item.dia} ({item.horarioInicio} - {item.horarioFim})</Text>
@@ -132,10 +137,50 @@ export const Perfil = () => {
       )
     } else {
       return (
-        <View> </View>
+        <View></View>
       )
     }
   })
+
+  // Listar todos os times que o aluno participa
+  const [times, setTimes] = useState<ITime[]>([])
+  useEffect(() => {
+    setLoading(true)
+    async function loadTimes() {
+      try {
+        const response = await apiTime.index({ idAluno: user?.data.id })
+        setTimes(response.data.times)
+      } catch (error) {
+        const err = error as AxiosError
+        const msg = err.response?.data as string
+      }
+    }
+    setLoading(false)
+    loadTimes()
+  }, [])
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  interface itemTime {
+    item: ITime
+  }
+
+  const renderItemTimes = (({ item }: itemTime) => {
+    if (item) {
+      return (
+        <View style={styles.tableDado}>
+          <Text style={styles.competicaoTabela}>{item.modalidade} {item.genero} - {item.competicao}</Text>
+          <Text style={styles.jogosTabela}>Jogos marcados: 2</Text>
+        </View>
+      )
+    } else {
+      return (
+        <View></View>
+      )
+    }
+  })
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -240,6 +285,15 @@ export const Perfil = () => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <View style={{ width: '80%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Meus times</Text>
+            {
+              times.length > 0 && (
+                <FlatList
+                  data={times}
+                  renderItem={renderItemTimes}
+                  keyExtractor={item => String(item.idTime)}
+                />
+              )
+            }
             <Button title="Fechar" onPress={() => setModalTimesVisible(false)} />
           </View>
         </View>

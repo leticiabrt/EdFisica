@@ -138,6 +138,16 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         color: 'gray',
       },
+      competicaoTabela: {
+        fontWeight: '800',
+        fontSize: 18,
+        color: 'black',
+      },
+      jogosTabela: {
+        fontWeight: '700',
+        fontSize: 16,
+        color: 'gray',
+      },
       Cancelar: {
         fontWeight: "800",
         color: "red",

@@ -1,5 +1,5 @@
 import { DrawerNavigationProp, createDrawerNavigator } from '@react-navigation/drawer';
-import { Noticias, Checkins, Perfil, Reservas, Times, Testes, Cronograma2 } from '../screens';
+import { Noticias, Checkins, Perfil, Reservas, Times, Cronograma2 } from '../screens';
 import { styles } from "./styles";
 import { colors } from '../styles/globalstyles'
 import { Image } from 'react-native';

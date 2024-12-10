@@ -25,6 +25,13 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'flex-start'
     },
+    botoesTabela: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      width: '70%',
+      marginTop: 15
+  },
     flatlist: {
         width: '100%',
         paddingLeft: 16,
@@ -41,6 +48,16 @@ export const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 20,
         color: 'gray',
+      },
+      turmaTabela: {
+        fontWeight: '700',
+        fontSize: 16,
+        color: 'gray',
+      },
+      alunoTabela: {
+        fontWeight: '500',
+        fontSize: 20,
+        color: 'black',
       },
       diaTabela: {
         fontWeight: '800',
@@ -68,5 +85,10 @@ export const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 3,
     
+      },
+      botao: {
+        fontSize: 16,
+        fontWeight: '800',
+        color: colors.secondary
       },
 })

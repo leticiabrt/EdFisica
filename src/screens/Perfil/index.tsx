@@ -113,7 +113,7 @@ export const Perfil = () => {
   useEffect(() => {
     setLoading(true)
     async function loadMessage() {
-      const response = await apiReserva.mostrarReservas({ idAluno: user?.data.id })
+      const response = await apiReserva.index()
       setReserva(response.data.dados)
     }
     setLoading(false)
@@ -126,13 +126,12 @@ export const Perfil = () => {
 
   // foreach para percorrer todas reservas
   const renderItemReserva = (({ item }: itemReserva) => {
-    console.log(reserva)
-    if (item) {
+    if (item.status == 'A' && item.idAluno == user?.data.id) {
       return (
         <View style={styles.tableDado}>
           <Text style={styles.horarioTabela}>Dia: {item.dia} ({item.horarioInicio} - {item.horarioFim})</Text>
-          <Text style={styles.finalidadeReserva}>{item.finalidade}</Text>
-          <Text style={styles.localReserva}>{item.local}</Text>
+          <Text style={styles.atividadeTabela}>{item.finalidade}</Text>
+          <Text style={styles.responsavelTabela}>Responsável: {item.nomeAluno}</Text>
         </View>
       )
     } else {
@@ -141,6 +140,10 @@ export const Perfil = () => {
       )
     }
   })
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Listar todos os times que o aluno participa
   const [times, setTimes] = useState<ITime[]>([])
@@ -158,9 +161,6 @@ export const Perfil = () => {
     setLoading(false)
     loadTimes()
   }, [])
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   interface itemTime {
     item: ITime
@@ -223,9 +223,6 @@ export const Perfil = () => {
           <View style={styles.but}>
             <CustomButtonII title="Meus checkins" onPress={() => setModalCheckinsVisible(true)} />
           </View>
-          <View style={styles.but}>
-            <CustomButtonII title="Editar perfil" onPress={() => setModalEtidarVisible(true)} />
-          </View>
           <View style={styles.botaoSair}>
             <TouchableOpacity onPress={signOut}><Text style={styles.botaoSairTexto}>Sair</Text></TouchableOpacity>
           </View>
@@ -240,7 +237,7 @@ export const Perfil = () => {
         onRequestClose={() => setModalReservasVisible(false)}
       >
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <View style={{ width: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
+          <View style={{ width: '90%', height: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Minhas reservas</Text>
             <ScrollView>
               {
@@ -259,22 +256,6 @@ export const Perfil = () => {
         </View>
       </Modal>
 
-      {/* Modal para mostrar a justificativa da reserva negada */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalJustificativaVisible}
-        onRequestClose={() => setModalJustificativaVisible(false)}
-      >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <View style={{ width: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Justificativa</Text>
-            <Text>{justificativaSelecionada}</Text>
-            <Button title="Fechar" onPress={() => setModalJustificativaVisible(false)} />
-          </View>
-        </View>
-      </Modal>
-
       {/* Modal para mostrar os times */}
       <Modal
         animationType="slide"
@@ -283,7 +264,7 @@ export const Perfil = () => {
         onRequestClose={() => setModalTimesVisible(false)}
       >
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <View style={{ width: '80%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
+          <View style={{ width: '90%', height: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Meus times</Text>
             {
               times.length > 0 && (
@@ -307,7 +288,7 @@ export const Perfil = () => {
         onRequestClose={() => setModalCheckinsVisible(false)}
       >
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <View style={{ width: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
+          <View style={{ width: '90%', height: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Meus checkins</Text>
             <ScrollView>
               {
@@ -333,7 +314,7 @@ export const Perfil = () => {
         onRequestClose={() => setModalNotificacoesVisible(false)}
       >
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <View style={{ width: '80%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
+          <View style={{ width: '90%', height: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Notificações</Text>
             {notificacoes.length > 0 ? (
               notificacoes.map((notificacao) => (
@@ -350,20 +331,6 @@ export const Perfil = () => {
         </View>
       </Modal >
 
-      {/* Modal para editar o perfil */}
-      < Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalEtidarVisible}
-        onRequestClose={() => setModalEtidarVisible(false)}
-      >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <View style={{ width: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Editar Perfil</Text>
-            <Button title="Fechar" onPress={() => setModalEtidarVisible(false)} />
-          </View>
-        </View>
-      </Modal >
     </ScrollView >
   );
 };

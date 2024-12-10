@@ -5,17 +5,23 @@ import { View, Text, ScrollView, Button, Modal, TouchableOpacity } from 'react-n
 import React, { useEffect, useState } from 'react';
 import { useAuth } from "../../hook/auth";
 import { apiTime } from "../../services/data";
-import { IJogo, ITime } from "../../services/data/Time";
+import { IAluno, IJogo, ITime } from "../../services/data/Time";
 import { AxiosError } from "axios";
 import { FlatList } from "react-native-gesture-handler";
 
 
 export function Times() {
+    //constantes para os modais
     const [modalJogosVisible, setModalJogosVisible] = useState(false);
+    const [modalAlunosVisible, setModalAlunosVisible] = useState(false);
+
+    //constante para saber se esta na pagina de jemg ou intercampi
     const [competicao, setCompeticao] = useState(true);
+
+    //constante da tela de loading e das informacoes do user logado
     const { setLoading, user } = useAuth()
 
-    // Listar todos os times que o aluno participa
+    // Pegar todos os times que o aluno participa
     const [times, setTimes] = useState<ITime[]>([])
     useEffect(() => {
         setLoading(true)
@@ -34,6 +40,7 @@ export function Times() {
         loadTimes()
     }, [])
 
+    // Listar os times
     interface itemTime {
         item: ITime
     }
@@ -41,40 +48,60 @@ export function Times() {
     const renderItem = (({ item }: itemTime) => {
         if (item.competicao == 'Intercampi' && competicao == false) {
             return (
-                <TouchableOpacity onPress={() => {
-                    loadJogos(item.idTime)
-                    setModalJogosVisible(true)
-                }}>
-                    <View style={styles.tableDado}>
-                        <Text style={styles.competicaoTabela}>{item.modalidade} {item.genero} - {item.competicao}</Text>
-                        <Text style={styles.jogosTabela}>Jogos marcados: 2</Text>
+                <View style={styles.tableDado}>
+                    <Text style={styles.competicaoTabela}>{item.modalidade} {item.genero} - {item.competicao}</Text>
+                    <Text style={styles.jogosTabela}>Jogos marcados: 2</Text>
+
+                    <View style={styles.botoesTabela}>
+                        <TouchableOpacity onPress={() => {
+                            loadAlunos(item.idTime)
+                            setModalAlunosVisible(true)
+                        }}>
+                            <Text style={styles.botao}>Ver integrantes</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={() => {
+                            loadJogos(item.idTime)
+                            setModalJogosVisible(true)
+                        }}>
+                            <Text style={styles.botao}>Ver Jogos</Text>
+                        </TouchableOpacity>
                     </View>
-                </TouchableOpacity>
+                </View>
 
             )
         } else if (item.competicao == 'JEMG' && competicao == true) {
-                return (
-                    <TouchableOpacity onPress={() => {
-                        loadJogos(item.idTime)
-                        setModalJogosVisible(true)
-                    }}>
-                        <View style={styles.tableDado}>
-                            <Text style={styles.competicaoTabela}>{item.modalidade} {item.genero} - {item.competicao}</Text>
-                            <Text style={styles.jogosTabela}>Jogos marcados: 2</Text>
-                        </View>
-                    </TouchableOpacity>
-    
-                )
+            return (
+                <View style={styles.tableDado}>
+                    <Text style={styles.competicaoTabela}>{item.modalidade} {item.genero} - {item.competicao}</Text>
+                    <Text style={styles.jogosTabela}>Jogos marcados: 2</Text>
+                    <View style={styles.botoesTabela}>
+                        <TouchableOpacity onPress={() => {
+                            loadAlunos(item.idTime)
+                            setModalAlunosVisible(true)
+                        }}>
+                            <Text style={styles.botao}>Ver integrantes</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={() => {
+                            loadJogos(item.idTime)
+                            setModalJogosVisible(true)
+                        }}>
+                            <Text style={styles.botao}>Ver Jogos</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+            )
         } else {
             return (
-                    <View></View>
+                <View></View>
 
             )
         }
     })
 
-    //Listar os jogos de um time
-
+    //Pegar os jogos de um time
     const [jogos, setJogos] = useState<IJogo[]>([])
     async function loadJogos(idTime: any) {
         try {
@@ -89,6 +116,7 @@ export function Times() {
         }
     }
 
+    //Listar os jogos
     interface itemJogo {
         item: IJogo
     }
@@ -98,7 +126,7 @@ export function Times() {
             <View style={styles.tableDado}>
                 <Text style={styles.diaTabela}>{item.dia} ({item.horarioInicio} - {item.horarioFim})</Text>
                 <Text style={styles.localTabela}>Local: {item.local}</Text>
-                { item.observacao &&
+                {item.observacao &&
                     <Text style={styles.observacaoTabela}>Observação: {item.observacao}</Text>
                 }
             </View>
@@ -106,6 +134,35 @@ export function Times() {
     }
     )
 
+    const [alunos, setAlunos] = useState<IAluno[]>([])
+    async function loadAlunos(idTime: any) {
+        try {
+            setAlunos([])
+            const response = await apiTime.indexAlunos({ idTime: idTime })
+            setAlunos(response.data.alunos)
+            console.log(alunos)
+        } catch (error) {
+            const err = error as AxiosError
+            const msg = err.response?.data as string
+            console.log(msg)
+        }
+    }
+
+    //Listar os jogos
+    interface itemAluno {
+        item: IAluno
+    }
+
+    // Pegar os alunos de determinado time
+    const renderItemAlunos = (({ item }: itemAluno) => {
+        return (
+            <View style={styles.tableDado}>
+                <Text style={styles.alunoTabela}>{item.name}</Text>
+                <Text style={styles.turmaTabela}>{item.turma} {item.curso}</Text>
+            </View>
+        )
+    }
+    )
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -132,7 +189,7 @@ export function Times() {
                 onRequestClose={() => setModalJogosVisible(false)}
             >
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                    <View style={{ width: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
+                    <View style={{ width: '90%', height: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
                         <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Jogos</Text>
                         <ScrollView>
                             {
@@ -146,6 +203,32 @@ export function Times() {
                             }
                         </ScrollView>
                         <Button title="Fechar" onPress={() => setModalJogosVisible(false)} />
+                    </View>
+
+                </View>
+            </Modal>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalAlunosVisible}
+                onRequestClose={() => setModalAlunosVisible(false)}
+            >
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <View style={{ width: '90%', height: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Integrantes</Text>
+                        <ScrollView>
+                            {
+                                alunos.length > 0 && (
+                                    <FlatList
+                                        data={alunos}
+                                        renderItem={renderItemAlunos}
+                                        keyExtractor={item => String(item.idAluno)}
+                                    />
+                                )
+                            }
+                        </ScrollView>
+                        <Button title="Fechar" onPress={() => setModalAlunosVisible(false)} />
                     </View>
 
                 </View>

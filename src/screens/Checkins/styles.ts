@@ -115,5 +115,13 @@ export const styles = StyleSheet.create({
   },
   numeroParticipantes: {
     display: 'flex',
+  },
+  textoRecarregar: {
+    width: '100%',
+    textAlign: 'center',
+    marginBottom: 20,
+    fontSize: 18,
+    color: colors.secondary,
+    fontWeight: '800'
   }
 })

@@ -108,7 +108,7 @@ export const styles = StyleSheet.create({
       horarioTabela: {
         fontWeight: '700',
         fontSize: 18,
-        color: 'black',
+        color: colors.secondary,
       },
       atividadeTabela: {
         fontWeight: '400',

@@ -8,8 +8,16 @@ export interface ITime {
     competicao?: string
 }
 
+export interface IAluno {
+    idAluno?: number,
+    name?: string,
+    turma?: string,
+    curso?: string
+}
+
 export interface IResponseTime {
-    times: ITime[]
+    times: ITime[],
+    alunos: IAluno[]
 }
 
 //interface para receber os dados dos jogos
@@ -25,7 +33,6 @@ export interface IJogo {
 export interface IResponseJogo {
     jogos: IJogo[]
 }
-
 
 //Interfaces para pedir os dados
 export interface IdAluno {
@@ -43,6 +50,10 @@ class TimeData {
 
     indexJogos(data:idTime) {
         return api.post<IResponseJogo>('/api/listarJogos', data)
+    }
+
+    indexAlunos(data:idTime) {
+        return api.post<IResponseTime>('/api/listarAlunos', data)
     }
 }
 

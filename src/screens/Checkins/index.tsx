@@ -147,7 +147,7 @@ export function Checkins() {
         )
       }
       <TouchableOpacity onPress={() => setRecarregar(recarregar + 1)}>
-        <Text>Recarregar página</Text>
+        <Text style={styles.textoRecarregar}>Recarregar página</Text>
       </TouchableOpacity>
 
     </View>

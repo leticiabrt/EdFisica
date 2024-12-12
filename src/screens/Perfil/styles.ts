@@ -148,6 +148,9 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         color: 'gray',
       },
+      conteudo: {
+        fontWeight: '600',
+      },
       Cancelar: {
         fontWeight: "800",
         color: "red",

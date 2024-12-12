@@ -5,12 +5,13 @@ import CustomButtonII from '../../components/CustomButtonII';
 import { useAuth } from "../../hook/auth";
 import { FlatList } from 'react-native-gesture-handler';
 import { ITreino } from '../../services/data/Treino';
-import { apiReserva, apiTime, apiTreino } from '../../services/data';
+import { apiMensagem, apiReserva, apiTime, apiTreino } from '../../services/data';
 import { AxiosError } from 'axios';
 import { MaterialIcons } from '@expo/vector-icons';
 import { IReserva } from '../../services/data/Reserva';
 import { set } from 'date-fns';
 import { IJogo, ITime } from '../../services/data/Time';
+import { IMensagem } from '../../services/data/Mensagem';
 
 // Define o tipo para as notificações
 type Notificacao = {
@@ -142,8 +143,8 @@ export const Perfil = () => {
   })
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Listar todos os times que o aluno participa
   const [times, setTimes] = useState<ITime[]>([])
@@ -172,6 +173,46 @@ export const Perfil = () => {
         <View style={styles.tableDado}>
           <Text style={styles.competicaoTabela}>{item.modalidade} {item.genero} - {item.competicao}</Text>
           <Text style={styles.jogosTabela}>Jogos marcados: 2</Text>
+        </View>
+      )
+    } else {
+      return (
+        <View></View>
+      )
+    }
+  })
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  // Listar todos as mensagens
+  const [mensagens, setMensagens] = useState<IMensagem[]>([])
+  useEffect(() => {
+    setLoading(true)
+    async function loadTimes() {
+      try {
+        const response = await apiMensagem.index({ idAluno: user?.data.id })
+        setMensagens(response.data.mensagens)
+      } catch (error) {
+        const err = error as AxiosError
+        const msg = err.response?.data as string
+      }
+    }
+    setLoading(false)
+    loadTimes()
+  }, [])
+
+  interface itemMensagem {
+    item: IMensagem
+  }
+
+  const renderItemMensagens = (({ item }: itemMensagem) => {
+    if (item) {
+      return (
+        <View style={styles.tableDado}>
+          <Text style={styles.conteudo}>{item.conteudo}</Text>
+          <Text>{item.dia} - {item.horario}</Text>
         </View>
       )
     } else {
@@ -316,16 +357,15 @@ export const Perfil = () => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <View style={{ width: '90%', height: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Notificações</Text>
-            {notificacoes.length > 0 ? (
-              notificacoes.map((notificacao) => (
-                <View key={notificacao.id} style={{ marginBottom: 10 }}>
-                  <Text>{notificacao.mensagem}</Text>
-                  <View style={{ height: 1, backgroundColor: 'black', marginVertical: 5 }} />
-                </View>
-              ))
-            ) : (
-              <Text>Nenhuma notificação</Text>
-            )}
+            {
+              mensagens.length > 0 && (
+                <FlatList
+                  data={mensagens}
+                  renderItem={renderItemMensagens}
+                  keyExtractor={item => String(item.idMensagem)}
+                />
+              )
+            }
             <Button title="Fechar" onPress={() => setModalNotificacoesVisible(false)} />
           </View>
         </View>

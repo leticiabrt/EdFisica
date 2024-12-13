@@ -15,6 +15,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 export function Checkins() {
   const [checkinsRealizados, setCheckinsRealizados] = useState<string[]>([]); // Estado para armazenar check-ins realizados
   const [recarregar, setRecarregar] = useState(0)
+  const [loadingPage, setLoadingPage] = useState(true);
 
   const handlePress = (atividade: string) => { // Adicionando tipo para o parâmetro
     Alert.alert(
@@ -114,8 +115,9 @@ export function Checkins() {
   const { setLoading, user } = useAuth()
 
   useEffect(() => {
-    setLoading(true)
+    setLoadingPage(true)
     async function loadMessage() {
+
       try {
         const response = await apiTreino.index({ idAluno: user?.data.id })
         console.log(response.data.checkins)
@@ -125,9 +127,11 @@ export function Checkins() {
         const err = error as AxiosError
         const msg = err.response?.data as string
         console.log(msg)
+
+      }finally {
+        setLoadingPage(false); 
       }
     }
-    setLoading(false)
     loadMessage()
   }, [recarregar])
 
@@ -136,8 +140,12 @@ export function Checkins() {
       <View style={styles.header}>
         <Text style={styles.texto}>CHECKINS</Text>
       </View>
-      {
-        treino.length > 0 && (
+      {loadingPage && (
+        <View style={styles.loadingContainer}>
+          <Image source={require('../../assets/gifs/load.gif')} style={styles.loadingGif}/>
+        </View>
+      )}
+      {! loadingPage && treino.length > 0 && (
           <FlatList
             style={styles.flatlist}
             data={treino}
@@ -146,6 +154,7 @@ export function Checkins() {
           />
         )
       }
+
       <TouchableOpacity onPress={() => setRecarregar(recarregar + 1)}>
         <Text style={styles.textoRecarregar}>Recarregar página</Text>
       </TouchableOpacity>

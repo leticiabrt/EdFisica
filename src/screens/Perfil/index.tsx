@@ -227,6 +227,7 @@ export const Perfil = () => {
   })
 
   const [loadingPage, setLoadingPage] = useState(true);
+  console.log(user?.data.tipo)
   return (
     <ScrollView style={styles.container}>
       {loadingPage && (
@@ -250,30 +251,40 @@ export const Perfil = () => {
         <View style={styles.l}>
           <View style={styles.infos}>
             <Text style={styles.title}>NOME: <Text style={styles.subtitle}>{user?.data.name}</Text></Text>
-            <Text style={styles.title}>CURSO: <Text style={styles.subtitle}>{user?.data.turma} {user?.data.curso}</Text></Text>
+            {user?.data.tipo != 'professor' &&
+              <>
+                <Text style={styles.title}>CURSO: <Text style={styles.subtitle}>{user?.data.turma} {user?.data.curso}</Text></Text>
+                <Text style={styles.title}>MATRÍCULA: <Text style={styles.subtitle}>{user?.data.matricula}</Text></Text>
+              </>
+            }
             <Text style={styles.title}>EMAIL: <Text style={styles.subtitle}>{user?.data.email}</Text></Text>
-            <Text style={styles.title}>MATRÍCULA: <Text style={styles.subtitle}>{user?.data.matricula}</Text></Text>
             <Text style={styles.title}>DATA DE NASCIMENTO: <Text style={styles.subtitle}>{user?.data.dtNascimento}</Text></Text>
           </View>
         </View>
-
-        <View style={styles.desc}>
-          <View style={styles.caixa}>
-            <Text style={styles.title}>Descrição esportiva: </Text>
-            <Text style={styles.title}><Text style={styles.subtitle}>{user?.data.descricaoEsportiva}</Text></Text>
+        {user?.data.tipo == 'Aluno' &&
+          <View style={styles.desc}>
+            <View style={styles.caixa}>
+              <Text style={styles.title}>Descrição esportiva: </Text>
+              <Text style={styles.title}><Text style={styles.subtitle}>{user?.data.descricaoEsportiva}</Text></Text>
+            </View>
           </View>
-        </View>
+        }
 
         <View style={styles.botao}>
           <View style={styles.but}>
             <CustomButtonII title="Minhas reservas" onPress={() => setModalReservasVisible(true)} />
           </View>
-          <View style={styles.but}>
-            <CustomButtonII title="Meus times" onPress={() => setModalTimesVisible(true)} />
-          </View>
-          <View style={styles.but}>
-            <CustomButtonII title="Meus checkins" onPress={() => setModalCheckinsVisible(true)} />
-          </View>
+          {user?.data.tipo == 'Aluno' &&
+            <>
+              <View style={styles.but}>
+                <CustomButtonII title="Meus times" onPress={() => setModalTimesVisible(true)} />
+              </View>
+              <View style={styles.but}>
+                <CustomButtonII title="Meus checkins" onPress={() => setModalCheckinsVisible(true)} />
+              </View>
+            </>
+
+          }
           <View style={styles.botaoSair}>
             <TouchableOpacity onPress={signOut}><Text style={styles.botaoSairTexto}>Sair</Text></TouchableOpacity>
           </View>

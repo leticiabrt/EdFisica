@@ -27,7 +27,8 @@ export interface IAuthenticated {
         descricaoEsportiva: string;
         matricula: string;
         dtNascimento: string;
-        genero: string
+        genero: string;
+        tipo: string
     };
     user: IResponseUser;
     message: string;

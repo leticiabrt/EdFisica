@@ -3,6 +3,7 @@ import { Noticias, Checkins, Perfil, Reservas, Times, Cronograma2 } from '../scr
 import { styles } from "./styles";
 import { colors } from '../styles/globalstyles'
 import { Image } from 'react-native';
+import { useAuth } from '../hook/auth';
 
 type MenuDrawerParam = {
     Noticias: undefined
@@ -18,26 +19,30 @@ export type MenuDrawerTypes = {
 }
 
 
-  
+
 
 export function MenuDrawer() {
     const Drawer = createDrawerNavigator<MenuDrawerParam>();
-   
+    const { user } = useAuth()
     return (
-        <Drawer.Navigator  
-        screenOptions={{
-            headerStyle: {backgroundColor: colors.primary},
-            headerTitle:()=> <Image style={styles.cabecalho} source={require('../assets/cabecalho.png') }  /> ,
-            drawerContentStyle: {backgroundColor: colors.primary}
-        }} >
+        <Drawer.Navigator
+            screenOptions={{
+                headerStyle: { backgroundColor: colors.primary },
+                headerTitle: () => <Image style={styles.cabecalho} source={require('../assets/cabecalho.png')} />,
+                drawerContentStyle: { backgroundColor: colors.primary }
+            }} >
             <Drawer.Screen name="Noticias" component={Noticias} />
-            <Drawer.Screen name="Checkins" component={Checkins} />
-            <Drawer.Screen name="Perfil" component={Perfil} />
+            {user?.data.tipo == 'Aluno' &&
+                <>
+                    <Drawer.Screen name="Checkins" component={Checkins} />
+                    <Drawer.Screen name="Times" component={Times} />
+                </>
+            }
             <Drawer.Screen name="Reservas" component={Reservas} />
-            <Drawer.Screen name="Times" component={Times} />
+            <Drawer.Screen name="Perfil" component={Perfil} />
             <Drawer.Screen name="Cronograma" component={Cronograma2} />
         </Drawer.Navigator>
-         
+
     );
 }
 

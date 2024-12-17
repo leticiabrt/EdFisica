@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, Alert } from 'react-native';
+import { View, Text, Image, TextInput, Alert, TouchableOpacity, Linking } from 'react-native';
 import { styles } from './styles';
 import CustomButtonII from '../../components/CustomButtonII';
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
@@ -14,7 +14,7 @@ export interface ILogin {
 
 export function Inicio() {
     const [data, setData] = useState<ILogin>();
-    const {signIn, setLoading} = useAuth()
+    const { signIn, setLoading } = useAuth()
 
     async function handleLogin() {
         if (data?.email && data?.password) {
@@ -72,6 +72,11 @@ export function Inicio() {
 
                     <View style={styles.but}>
                         <CustomButtonII title="Entrar" onPress={handleLogin} />
+                    </View>
+                    <View>
+                        <TouchableOpacity onPress={() =>  Linking.openURL('https://render-rqga.onrender.com/CadastroInicial')}>
+                            <Text style={styles.registrar}>Registrar-se</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

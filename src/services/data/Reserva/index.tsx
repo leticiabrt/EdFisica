@@ -11,11 +11,14 @@ export interface IReserva {
     tipo?: string,
     numeroPessoas?: string,
     idAluno?: number,
-    nomeAluno?: string
+    nomeAluno?: string,
+    diaCancelamento: string
 }
 
 export interface IResponseReserva {
-    dados: IReserva[]
+    dados: IReserva[],
+    inicioSemana: string,
+    fimSemana: string
 }
 
 export interface IdAluno {

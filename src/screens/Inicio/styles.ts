@@ -94,6 +94,10 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.primary,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    registrar: {
+        fontWeight: '800',
+        color: colors.secondary
     }
 
 })

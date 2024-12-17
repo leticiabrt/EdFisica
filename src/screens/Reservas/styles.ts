@@ -148,5 +148,61 @@ export const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
     color: 'gray',
+  },
+  loadingContainer: {
+    position: "absolute",  
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",  
+    alignItems: "center",      
+    backgroundColor: "rgba(0, 0, 0, 0.5)", 
+    zIndex: 9999, 
+  },
+  
+  loadingGif: {
+    width: 100,  
+    height: 100, 
+    resizeMode: "contain", 
+  },
+  viewSemana: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center'
+  },
+  textSemana: {
+    width: '100%',
+    textAlign: 'center',
+    marginBottom: 20,
+    fontSize: 30,
+    fontWeight: '800',
+    color: colors.secondary
+  },
+  textoRecarregar: {
+    width: '100%',
+    textAlign: 'center',
+    marginBottom: 20,
+    fontSize: 18,
+    color: colors.secondary,
+    fontWeight: '800'
+  },
+  botaoRegras: {
+    marginTop: 10,
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row'
+  },
+  iconeRegras: {
+    marginTop: 5,
+    marginRight: 5
+  },
+  textoRegras: {
+    marginTop: 26
+  },
+  textoRegrasBotao: {
+    marginTop: 5,
+    color: colors.secondary,
+    fontWeight: '800'
   }
 });

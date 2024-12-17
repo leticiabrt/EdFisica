@@ -56,6 +56,7 @@ export const Perfil = () => {
         const msg = err.response?.data as string
       }
     }
+    setLoadingPage(false)
     setLoading(false)
     loadMessage()
   }, [])
@@ -117,6 +118,7 @@ export const Perfil = () => {
       const response = await apiReserva.index()
       setReserva(response.data.dados)
     }
+    setLoadingPage(false)
     setLoading(false)
     loadMessage()
   }, [])
@@ -159,6 +161,7 @@ export const Perfil = () => {
         const msg = err.response?.data as string
       }
     }
+    setLoadingPage(false)
     setLoading(false)
     loadTimes()
   }, [])
@@ -200,6 +203,7 @@ export const Perfil = () => {
       }
     }
     setLoading(false)
+    setLoadingPage(false)
     loadTimes()
   }, [])
 
@@ -222,8 +226,14 @@ export const Perfil = () => {
     }
   })
 
+  const [loadingPage, setLoadingPage] = useState(true);
   return (
     <ScrollView style={styles.container}>
+      {loadingPage && (
+        <View style={styles.loadingContainer}>
+          <Image source={require('../../assets/gifs/load.gif')} style={styles.loadingGif} />
+        </View>
+      )}
       <View style={styles.header}>
         <View style={styles.teste}>
           <View style={styles.tex}>
@@ -307,15 +317,17 @@ export const Perfil = () => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <View style={{ width: '90%', height: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Meus times</Text>
-            {
-              times.length > 0 && (
-                <FlatList
-                  data={times}
-                  renderItem={renderItemTimes}
-                  keyExtractor={item => String(item.idTime)}
-                />
-              )
-            }
+            <ScrollView>
+              {
+                times.length > 0 && (
+                  <FlatList
+                    data={times}
+                    renderItem={renderItemTimes}
+                    keyExtractor={item => String(item.idTime)}
+                  />
+                )
+              }
+            </ScrollView>
             <Button title="Fechar" onPress={() => setModalTimesVisible(false)} />
           </View>
         </View>
@@ -357,15 +369,17 @@ export const Perfil = () => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <View style={{ width: '90%', height: '90%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Notificações</Text>
-            {
-              mensagens.length > 0 && (
-                <FlatList
-                  data={mensagens}
-                  renderItem={renderItemMensagens}
-                  keyExtractor={item => String(item.idMensagem)}
-                />
-              )
-            }
+            <ScrollView>
+              {
+                mensagens.length > 0 && (
+                  <FlatList
+                    data={mensagens}
+                    renderItem={renderItemMensagens}
+                    keyExtractor={item => String(item.idMensagem)}
+                  />
+                )
+              }
+            </ScrollView>
             <Button title="Fechar" onPress={() => setModalNotificacoesVisible(false)} />
           </View>
         </View>

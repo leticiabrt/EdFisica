@@ -1,5 +1,5 @@
 import { DrawerNavigationProp, createDrawerNavigator } from '@react-navigation/drawer';
-import { Noticias, Checkins, Perfil, Reservas, Times, Cronograma2 } from '../screens';
+import { Noticias, Checkins, Perfil, Reservas, Times, Cronograma } from '../screens';
 import { styles } from "./styles";
 import { colors } from '../styles/globalstyles'
 import { Image } from 'react-native';
@@ -40,7 +40,7 @@ export function MenuDrawer() {
             }
             <Drawer.Screen name="Reservas" component={Reservas} />
             <Drawer.Screen name="Perfil" component={Perfil} />
-            <Drawer.Screen name="Cronograma" component={Cronograma2} />
+            <Drawer.Screen name="Cronograma" component={Cronograma} />
         </Drawer.Navigator>
 
     );

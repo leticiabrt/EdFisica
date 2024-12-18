@@ -63,5 +63,44 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 15,
         textAlign: 'center',
-    }
+    },
+    flatlist: {
+        width: '100%',
+        paddingLeft: 16,
+        paddingRight: 16,
+        marginBottom: 30,
+        marginTop: 30
+      },
+      horarioTabela: {
+        fontWeight: '800',
+        fontSize: 22,
+        color: 'black',
+      },
+      atividadeTabela: {
+        fontWeight: '400',
+        fontSize: 18,
+        color: 'gray',
+      },
+      responsavelTabela: {
+        fontWeight: '400',
+        fontSize: 16,
+        color: 'gray',
+      },
+      tableDado: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        marginBottom: 15,
+        shadowColor: '#000', // Sombra
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 3,
+    
+      },
+      localTabela: {
+        fontWeight: '400',
+        fontSize: 20,
+        color: 'gray',
+      },
 });
